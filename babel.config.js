@@ -22,6 +22,7 @@ module.exports = {
                     '@screens': './src/screens',
                     '@navigation': './src/navigation',
                     '@api': './src/api',
+                    '@redux': './src/redux',
                 },
             },
             'react-native-reanimated/plugin',

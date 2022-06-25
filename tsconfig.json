@@ -18,7 +18,8 @@
             "@components*": ["src/components/*"],
             "@screens": ["src/screens"],
             "@navigation": ["src/navigation"],
-            "@api": ["src/api"]
+            "@api": ["src/api"],
+            "@redux": ["src/redux"]
         }
     },
     "exclude": [

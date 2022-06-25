@@ -24,12 +24,15 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use((config: any) => {
     let token = '';
+    const { data, url } = config;
+    console.log('================> API CALL', { data, url });
     config.headers.Authorization = `Bearer ${token}`;
     delete axios.defaults.headers.common['Accept-Encoding'];
     return config;
 });
 
 axiosClient.interceptors.response.use(response => {
+    console.log('===========> API STATUS', response.status);
     if (response && response.data) {
         return response.data;
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     FlatList,
     Image,
@@ -8,44 +8,63 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import { debounce } from 'lodash';
 
 import { Input, CommonButton, Word } from '@components';
 import { Images, Spacing } from '@assets';
-import { useAppSelector, useAppDispatch } from '../../redux/hooks';
-import {
-    selectWords,
-    getWordsPagination,
-    fetchWordsAsync,
-    searchWords,
-    getWordsPage1,
-} from '../../redux/slices/wordsSlice';
+import { getWords } from '@api';
 
 const Home = () => {
-    const words = useAppSelector(selectWords);
-    const dispatch = useAppDispatch();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // const words = useAppSelector(selectWords);
     const [page, setPage] = useState(1);
-
     const [value, setValue] = useState<string>('');
+    const [isError, setIsError] = useState<boolean>(false);
+    const [words, setWords] = useState<Chars.Item[]>([]);
     const [refreshing, setRefreshing] = React.useState(false);
 
     const navigation: any = useNavigation();
 
     useEffect(() => {
-        dispatch(fetchWordsAsync());
-    }, [dispatch]);
+        fetchWords(page, value);
+    }, []);
 
-    // useEffect(() => {
-    //     dispatch(getWordsPagination(page));
-    //     // console.log(page);
-    // }, [dispatch, page]);
+    const fetchWords = async (page: number, search: string) => {
+        const params: Chars.Search = {
+            page,
+            search,
+        };
 
-    // console.log(words);
+        try {
+            const res = await getWords(params);
+            if (res.data && res.data.length > 0) {
+                if (page === 1) {
+                    setWords(res.data);
+                } else {
+                    setWords([...words, ...res.data]);
+                }
+            } else {
+                setIsError(true);
+                if (page === 1) {
+                    setWords([]);
+                }
+            }
+        } catch {
+            setIsError(true);
+        }
+    };
+
+    const handleChangeWord = useCallback(
+        debounce((keyword: string) => {
+            fetchWords(1, keyword);
+            setPage(1);
+        }, 500),
+        [],
+    );
 
     const handleChangeValue = (text: string) => {
         setValue(text);
-        dispatch(searchWords(text));
-        dispatch(getWordsPage1());
+        setIsError(false);
+        handleChangeWord(text);
     };
 
     // console.log(words);
@@ -55,15 +74,16 @@ const Home = () => {
     };
 
     const onLoadMore = () => {
-        setPage((prevPage: number) => {
-            dispatch(getWordsPagination(prevPage + 1));
-            return prevPage + 1;
-        });
+        if (!isError) {
+            const nextPage = page + 1;
+            setPage(nextPage);
+            fetchWords(nextPage, value);
+        }
     };
 
     const onRefresh = () => {
         setRefreshing(true);
-        dispatch(getWordsPage1());
+        fetchWords(page, value);
         setRefreshing(false);
     };
 

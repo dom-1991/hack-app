@@ -35,7 +35,7 @@ export const WordDetail = () => {
     const navigation: any = useNavigation();
 
     const handleGoback = useCallback(() => {
-        navigation.goBack();
+        // navigation.goBack();
     }, [navigation]);
 
     const handleReportModalVisible = useCallback(() => {
@@ -143,14 +143,14 @@ export const WordDetail = () => {
             {item && (
                 <NoteModal
                     word={item}
-                    onGoback={handleGoback}
+                    onGoback={handleNoteModalVisible}
                     modalVisible={noteModalVisible}
                     onModalVisible={handleNoteModalVisible}
                 />
             )}
 
             <ReportModal
-                onGoback={handleGoback}
+                onGoback={handleReportModalVisible}
                 modalVisible={reportModalVisible}
                 onModalVisible={handleReportModalVisible}
             />

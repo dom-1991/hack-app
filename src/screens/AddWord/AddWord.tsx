@@ -19,7 +19,7 @@ const AddWord = () => {
     };
 
     const onGoback = () => {
-        navigation.navigate('Home');
+        // navigation.navigate('Home');
     };
 
     return (
@@ -59,7 +59,7 @@ const AddWord = () => {
                     />
                 </View>
             </View>
-            <CustomModal
+            {/* <CustomModal
                 modalVisible={modalVisible}
                 onModalVisible={handleModalVisible}
                 onClose={onGoback}>
@@ -67,7 +67,7 @@ const AddWord = () => {
                 <Text style={styles.modalText}>
                     Chúng mình đã ghi lại cẩn thận rùi nha.
                 </Text>
-            </CustomModal>
+            </CustomModal> */}
         </>
     );
 };
