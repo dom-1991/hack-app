@@ -10,7 +10,7 @@ export const getWords = (params?: Chars.Search) => {
     return axiosClient.get(url);
 };
 
-export const commentPost = (params: Chars.CommentPost) => {
+export const commentPost = (params: Chars.Comment) => {
     const { id, author_name, content } = params;
 
     let url = `http://103.130.213.12/api/chars/${id}/comment`;

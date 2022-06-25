@@ -13,13 +13,14 @@ import { debounce } from 'lodash';
 import { Input, CommonButton, Word } from '@components';
 import { Images, Spacing } from '@assets';
 import { getWords } from '@api';
+import { CharsItem, CharsSearch } from '@types';
 
 const Home = () => {
     // const words = useAppSelector(selectWords);
     const [page, setPage] = useState(1);
     const [value, setValue] = useState<string>('');
     const [isError, setIsError] = useState<boolean>(false);
-    const [words, setWords] = useState<Chars.Item[]>([]);
+    const [words, setWords] = useState<CharsItem[]>([]);
     const [refreshing, setRefreshing] = React.useState(false);
 
     const navigation: any = useNavigation();
@@ -29,7 +30,7 @@ const Home = () => {
     }, []);
 
     const fetchWords = async (page: number, search: string) => {
-        const params: Chars.Search = {
+        const params: CharsSearch = {
             page,
             search,
         };

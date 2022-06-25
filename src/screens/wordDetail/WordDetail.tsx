@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Tts from 'react-native-tts';
+import { CharsItem } from '@types';
 import NoteModal from './NoteModal';
 import ReportModal from './ReportModal';
 import { styles } from './styles';
@@ -24,7 +25,7 @@ export const WordDetail = () => {
     }, []);
 
     const route: any = useRoute();
-    let { item }: { item: Home.Word } = route.params || {};
+    let { item }: { item: CharsItem } = route.params || {};
 
     const onTextToSpeech = (text: string) => {
         Tts.speak(text);

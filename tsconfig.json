@@ -19,6 +19,9 @@
             "@screens": ["src/screens"],
             "@navigation": ["src/navigation"],
             "@api": ["src/api"],
+            "@utils": ["src/utils"],
+            "@enum": ["src/enum"],
+            "@types": ["src/types"],
             "@redux": ["src/redux"]
         }
     },
