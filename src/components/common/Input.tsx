@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
         padding: Spacing.width4,
         fontSize: FontSize.Font12,
         lineHeight: Spacing.height16,
+        minWidth: Spacing.width100,
     },
 
     error: {

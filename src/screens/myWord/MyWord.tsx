@@ -12,19 +12,11 @@ import { useNavigation } from '@react-navigation/native';
 
 import { Word } from '@components';
 import { FontSize, FontWithBold, Spacing } from '@assets';
-import { useAppSelector, useAppDispatch } from '../../redux/hooks';
-import {
-    selectWords,
-    getWordsPagination,
-    fetchWordsAsync,
-    getWordsPage1,
-} from '../../redux/slices/wordsSlice';
 
 const MyWord = () => {
     const tabs = ['Cần học', 'Đã xong', 'Tất cả'];
 
-    const words = useAppSelector(selectWords);
-    const dispatch = useAppDispatch();
+    const words: any = [];
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [page, setPage] = useState<number>(1);
     const [indexTabActive, setIndexTabActive] = useState(2);
@@ -33,19 +25,19 @@ const MyWord = () => {
     const navigation: any = useNavigation();
 
     useEffect(() => {
-        dispatch(fetchWordsAsync());
-    }, [dispatch]);
+        // dispatch(fetchWordsAsync());
+    }, []);
 
     const onLoadMore = () => {
         setPage((prevPage: number) => {
-            dispatch(getWordsPagination(prevPage + 1));
+            // dispatch(getWordsPagination(prevPage + 1));
             return prevPage + 1;
         });
     };
 
     const onRefresh = () => {
         setRefreshing(true);
-        dispatch(getWordsPage1());
+        // dispatch(getWordsPage1());
         setRefreshing(false);
     };
 

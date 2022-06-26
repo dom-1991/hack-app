@@ -9,6 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { debounce } from 'lodash';
+import { useRoute } from '@react-navigation/native';
 
 import { Input, CommonButton, Word } from '@components';
 import { Images, Spacing } from '@assets';

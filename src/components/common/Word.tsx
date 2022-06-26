@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { Spacing, FontSize } from '@assets';
+import { limitWord } from '@utils';
 
 interface WordProps {
     wordTitle: string;
@@ -32,7 +33,9 @@ export const Word = (props: WordProps) => {
                     </Text>
                 </View>
                 <View>
-                    <Text style={styles.translateTitle}>{translateTitle}</Text>
+                    <Text style={styles.translateTitle}>
+                        {limitWord(translateTitle, 4)}
+                    </Text>
                 </View>
             </View>
 
@@ -75,12 +78,12 @@ const styles = StyleSheet.create({
     },
 
     translateTitle: {
-        fontSize: FontSize.Font18,
+        fontSize: FontSize.Font13,
         color: '#00000063',
     },
 
     translateDescription: {
-        fontSize: FontSize.Font14,
+        fontSize: FontSize.Font12,
         color: '#00000075',
         marginTop: Spacing.height12,
     },

@@ -24,6 +24,7 @@ module.exports = {
                     '@api': './src/api',
                     '@redux': './src/redux',
                     '@enum': './src/enum',
+                    '@enum/*': './src/enum/*',
                     '@utils': './src/utils',
                     '@types': './src/types',
                 },

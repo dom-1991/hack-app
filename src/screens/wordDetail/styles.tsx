@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
     },
 
     noteButton: {
-        marginTop: Spacing.height56,
+        marginTop: Spacing.height40,
         marginBottom: Spacing.height28,
     },
 
@@ -56,6 +56,10 @@ export const styles = StyleSheet.create({
 
     comment: {},
 
+    commentContainer: {
+        maxHeight: Spacing.height200,
+    },
+
     commentHeading: {
         fontSize: FontSize.Font16,
         color: 'rgba(0, 0, 0, 0.78)',
@@ -65,7 +69,7 @@ export const styles = StyleSheet.create({
 
     commentItem: {
         flexDirection: 'row',
-        alignItems: 'flex-start',
+        alignItems: 'flex-end',
         justifyContent: 'space-between',
     },
 
@@ -78,13 +82,10 @@ export const styles = StyleSheet.create({
 
     reaction: {
         flexDirection: 'row',
-        alignItems: 'flex-start',
-        justifyContent: 'space-around',
     },
 
     reactionItem: {
         flexDirection: 'row',
-        alignItems: 'center',
         padding: Spacing.height12,
     },
 
@@ -96,20 +97,23 @@ export const styles = StyleSheet.create({
     reactionCount: {
         fontSize: FontSize.Font12,
         color: 'rgba(0, 0, 0, 0.55)',
-        marginLeft: Spacing.height8,
+        marginRight: Spacing.height8,
     },
 
     author: {
         fontSize: FontSize.Font11,
         ...FontWithBold.Bold_700,
         color: 'rgba(0, 0, 0, 0.42)',
+        paddingBottom: Spacing.height12,
     },
 
     input: {
         paddingHorizontal: Spacing.height12,
     },
 
-    addComment: {},
+    addComment: {
+        marginTop: Spacing.height20,
+    },
 
     addCommentAction: {
         flexDirection: 'row',
@@ -123,6 +127,7 @@ export const styles = StyleSheet.create({
         width: '100%',
         bottom: 0,
         marginBottom: Spacing.height20,
+        marginTop: Spacing.height20,
     },
 
     centerNoteModal: {

@@ -1,14 +1,16 @@
 import { Images } from '@assets';
-import { CommonButton } from '@components';
+import { Comment, CommonButton, Input } from '@components';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Tts from 'react-native-tts';
-import { CharsItem } from '@types';
+import { CharsComment, CharsItem } from '@types';
 import NoteModal from './NoteModal';
 import ReportModal from './ReportModal';
 import { styles } from './styles';
+import { ScrollView } from 'react-native-gesture-handler';
+import { commentPost } from '@api';
 
 export const WordDetail = () => {
     useEffect(() => {
@@ -33,6 +35,11 @@ export const WordDetail = () => {
 
     const [reportModalVisible, setReportModalVisible] = useState(false);
     const [noteModalVisible, setNoteModalVisible] = useState(false);
+    const [comments, setComments] = useState<CharsComment[]>(
+        item?.comment || [],
+    );
+    const [content, setContent] = useState<string>('');
+    const [author_name, setAuthorName] = useState<string>('');
     const navigation: any = useNavigation();
 
     const handleGoback = useCallback(() => {
@@ -47,11 +54,33 @@ export const WordDetail = () => {
         setNoteModalVisible(!noteModalVisible);
     }, [noteModalVisible]);
 
+    const handleComment = async () => {
+        if (author_name && content) {
+            try {
+                const params: CharsComment = {
+                    id: item.id,
+                    author_name,
+                    content,
+                };
+                await commentPost(params);
+                setComments([
+                    ...comments,
+                    { id: Date.now(), author_name, content },
+                ]);
+                setContent('');
+            } catch {
+                //
+            }
+        }
+    };
+
     return (
         <SafeAreaView
             style={styles.container}
             edges={['left', 'right', 'bottom']}>
-            <View style={styles.inner}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={styles.inner}>
                 <View style={styles.top}>
                     <View>
                         <Text style={styles.word}>{item?.word}</Text>
@@ -60,7 +89,7 @@ export const WordDetail = () => {
                         <TouchableOpacity
                             activeOpacity={0.8}
                             onPress={() => {
-                                onTextToSpeech(item?.word);
+                                onTextToSpeech(item?.read);
                             }}>
                             <Image
                                 source={Images.sound}
@@ -81,66 +110,51 @@ export const WordDetail = () => {
                         onPress={handleNoteModalVisible}
                     />
                 </View>
-                {/* <View style={styles.comment}>
+                <View style={styles.comment}>
                     <Text style={styles.commentHeading}>Các góp ý</Text>
-                    {item?.comment?.map(comment => (
-                        <View style={styles.commentItem} key={comment.id}>
-                            <View style={styles.content}>
-                                <Text style={styles.commentText}>
-                                    {comment.content}
-                                </Text>
-                                <View style={styles.reaction}>
-                                    <View style={styles.reactionItem}>
-                                        <Image
-                                            source={Images.like}
-                                            style={styles.reactionImage}
-                                        />
-                                        <Text style={styles.reactionCount}>
-                                            {comment.like}
-                                        </Text>
-                                    </View>
-                                    <View style={styles.reactionItem}>
-                                        <Image
-                                            source={Images.unlike}
-                                            style={styles.reactionImage}
-                                        />
-                                        <Text style={styles.reactionCount}>
-                                            {comment.unlike}
-                                        </Text>
-                                    </View>
-                                </View>
-                            </View>
-                            <Text style={styles.author}>
-                                {comment.author_name}
-                            </Text>
-                        </View>
-                    ))}
-                </View> */}
-                {/* <View style={styles.addComment}>
+                    <ScrollView style={styles.commentContainer}>
+                        {comments.map(comment => (
+                            <Comment comment={comment} key={comment.id} />
+                        ))}
+                    </ScrollView>
+                </View>
+                <View style={styles.addComment}>
                     <Input
-                        // value={value}
-                        // onChangeValue={handleChangeValue}
+                        value={content}
+                        onChangeValue={value => {
+                            setContent(value);
+                        }}
                         placeholder="Thêm góp ý của bạn..."
                     />
                     <View style={styles.addCommentAction}>
-                        <Input size="small" placeholder="Tên của bạn" />
+                        <Input
+                            size="small"
+                            placeholder="Tên của bạn"
+                            value={author_name}
+                            onChangeValue={value => {
+                                setAuthorName(value);
+                            }}
+                        />
                         <View style={styles.sendCommentButton}>
-                            <CommonButton type="small" title="Gửi" />
+                            <CommonButton
+                                type="small"
+                                title="Gửi"
+                                onPress={handleComment}
+                            />
                         </View>
                     </View>
+                </View>
 
-                    
-                </View> */}
-            </View>
-            <SafeAreaView
-                style={styles.reportButton}
-                edges={['left', 'right', 'bottom']}>
-                <CommonButton
-                    title="Báo cáo từ này có vấn đề"
-                    backgroundColor="#C4C4C4"
-                    onPress={handleReportModalVisible}
-                />
-            </SafeAreaView>
+                <SafeAreaView
+                    style={styles.reportButton}
+                    edges={['left', 'right', 'bottom']}>
+                    <CommonButton
+                        title="Báo cáo từ này có vấn đề"
+                        backgroundColor="#C4C4C4"
+                        onPress={handleReportModalVisible}
+                    />
+                </SafeAreaView>
+            </ScrollView>
             {item && (
                 <NoteModal
                     word={item}

@@ -1,7 +1,8 @@
 import axiosClient from './axiosClient';
 import queryString from 'query-string';
+import { CharsComment, CharsCommentInteract, CharsSearch } from '@types';
 
-export const getWords = (params?: Chars.Search) => {
+export const getWords = (params?: CharsSearch) => {
     let url = 'http://103.130.213.12/api/chars';
     if (params) {
         const qs = queryString.stringify(params);
@@ -10,7 +11,7 @@ export const getWords = (params?: Chars.Search) => {
     return axiosClient.get(url);
 };
 
-export const commentPost = (params: Chars.Comment) => {
+export const commentPost = (params: CharsComment) => {
     const { id, author_name, content } = params;
 
     let url = `http://103.130.213.12/api/chars/${id}/comment`;
@@ -18,7 +19,7 @@ export const commentPost = (params: Chars.Comment) => {
     return axiosClient.post(url, { author_name, content });
 };
 
-export const commentInteract = (params: Chars.CommentInteract) => {
+export const commentInteract = (params: CharsCommentInteract) => {
     const { id, status, device_fcm } = params;
 
     let url = `http://103.130.213.12/api/comments/${id}/interactive`;
