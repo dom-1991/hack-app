@@ -22,7 +22,7 @@
             "@utils": ["src/utils"],
             "@enum": ["src/enum"],
             "@types": ["src/types"],
-            "@redux": ["src/redux"]
+            "@stores": ["src/stores"]
         }
     },
     "exclude": [

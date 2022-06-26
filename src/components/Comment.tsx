@@ -5,8 +5,15 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { FontSize, FontWithBold, Spacing, Images } from '@assets';
 import { CharsComment, CharsCommentInteract } from '@types';
-import { useAppSelector, selectWords } from '@redux';
+import {
+    useAppSelector,
+    selectWords,
+    useAppDispatch,
+    likeComment,
+    unlikeComment,
+} from '@stores';
 import { StatusEnum } from '@enum';
+import { commentInteract } from '@api';
 
 interface Props {
     comment: CharsComment;
@@ -16,22 +23,34 @@ const deviceId = DeviceInfo.getUniqueId();
 
 export const Comment = (props: Props) => {
     const { comment } = props;
-    const { likeComments, dislikeComments } = useAppSelector(selectWords);
-
-    const isLike = likeComments.includes(comment.id);
-    const isUnlike = dislikeComments.includes(comment.id);
+    const dispatch = useAppDispatch();
+    const words = useAppSelector(selectWords);
+    const isLike = words.likeComments.includes(comment.id);
+    const isUnlike = words.unlikeComments.includes(comment.id);
     const likeCount = isLike ? 1 : 0;
     const unlikeCount = isUnlike ? 1 : 0;
 
-    console.log(deviceId);
-
-    const handleLike = () => {
+    const handleLike = async () => {
         if (!isLike) {
             const params: CharsCommentInteract = {
                 device_fcm: deviceId,
                 id: comment.id,
                 status: StatusEnum.Active,
             };
+            await commentInteract(params);
+            dispatch(likeComment(comment.id));
+        }
+    };
+
+    const handleUnlike = async () => {
+        if (!unlikeCount) {
+            const params: CharsCommentInteract = {
+                device_fcm: deviceId,
+                id: comment.id,
+                status: StatusEnum.InActive,
+            };
+            await commentInteract(params);
+            dispatch(unlikeComment(comment.id));
         }
     };
 
@@ -44,9 +63,9 @@ export const Comment = (props: Props) => {
                     (isLike || !isUnlike) ? (
                         <View style={styles.reactionItem}>
                             <Text style={styles.reactionCount}>
-                                {comment.like}
+                                {comment.like + likeCount}
                             </Text>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={handleLike}>
                                 <Image
                                     source={
                                         isLike ? Images.likeActive : Images.like
@@ -62,16 +81,18 @@ export const Comment = (props: Props) => {
                     (isUnlike || !isLike) ? (
                         <View style={styles.reactionItem}>
                             <Text style={styles.reactionCount}>
-                                {comment.unlike}
+                                {comment.unlike + unlikeCount}
                             </Text>
-                            <Image
-                                source={
-                                    isUnlike
-                                        ? Images.unlikeActive
-                                        : Images.unlike
-                                }
-                                style={styles.reactionImage}
-                            />
+                            <TouchableOpacity onPress={handleUnlike}>
+                                <Image
+                                    source={
+                                        isUnlike
+                                            ? Images.unlikeActive
+                                            : Images.unlike
+                                    }
+                                    style={styles.reactionImage}
+                                />
+                            </TouchableOpacity>
                         </View>
                     ) : (
                         <></>

@@ -1,13 +1,12 @@
-import { getWords } from '@api';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 export interface WordListState {
     likeComments: number[];
-    dislikeComments: number[];
+    unlikeComments: number[];
 }
 
-const initialState: WordListState = { likeComments: [], dislikeComments: [] };
+const initialState: WordListState = { likeComments: [], unlikeComments: [] };
 
 export const wordsSlice = createSlice({
     name: 'words',
@@ -18,11 +17,16 @@ export const wordsSlice = createSlice({
         },
         likeComment: (state, action) => {
             const id = action.payload;
+            state.likeComments = [...state.likeComments, id];
+        },
+        unlikeComment: (state, action) => {
+            const id = action.payload;
+            state.unlikeComments = [...state.unlikeComments, id];
         },
     },
 });
 
-export const { resetWords } = wordsSlice.actions;
+export const { resetWords, unlikeComment, likeComment } = wordsSlice.actions;
 
 export const selectWords = (state: RootState) => state.words;
 

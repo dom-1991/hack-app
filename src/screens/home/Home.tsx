@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     FlatList,
     Image,
@@ -9,7 +9,6 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { debounce } from 'lodash';
-import { useRoute } from '@react-navigation/native';
 
 import { Input, CommonButton, Word } from '@components';
 import { Images, Spacing } from '@assets';
@@ -27,26 +26,26 @@ const Home = () => {
     const navigation: any = useNavigation();
 
     useEffect(() => {
-        fetchWords(page, value);
+        fetchWords(1, '');
     }, []);
 
-    const fetchWords = async (page: number, search: string) => {
+    const fetchWords = async (movePage: number, search: string) => {
         const params: CharsSearch = {
-            page,
+            page: movePage,
             search,
         };
 
         try {
             const res = await getWords(params);
             if (res.data && res.data.length > 0) {
-                if (page === 1) {
+                if (movePage === 1) {
                     setWords(res.data);
                 } else {
                     setWords([...words, ...res.data]);
                 }
             } else {
                 setIsError(true);
-                if (page === 1) {
+                if (movePage === 1) {
                     setWords([]);
                 }
             }
@@ -55,13 +54,10 @@ const Home = () => {
         }
     };
 
-    const handleChangeWord = useCallback(
-        debounce((keyword: string) => {
-            fetchWords(1, keyword);
-            setPage(1);
-        }, 500),
-        [],
-    );
+    const handleChangeWord = debounce((keyword: string) => {
+        fetchWords(1, keyword);
+        setPage(1);
+    }, 500);
 
     const handleChangeValue = (text: string) => {
         setValue(text);
