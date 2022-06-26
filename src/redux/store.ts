@@ -6,9 +6,10 @@ import {
 } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistStore, persistReducer } from 'redux-persist';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 import wordsReducer from './slices/wordsSlice';
+import logger from 'redux-logger';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 const persistConfig = {
     key: 'root',
@@ -21,10 +22,11 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = configureStore({
+export let store = configureStore({
     reducer: persistedReducer,
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
+            logger,
             serializableCheck: false,
         }),
 });
