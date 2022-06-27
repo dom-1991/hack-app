@@ -6,14 +6,19 @@ import {
 } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistStore, persistReducer } from 'redux-persist';
-
-import wordsReducer from './slices/wordsSlice';
 import logger from 'redux-logger';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+
+import wordsReducer from './slices/wordsSlice';
 
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
+    whiteList: ['words'],
+    migrate: (state: any) => {
+        console.log('Migration Running!');
+        return Promise.resolve(state);
+    },
 };
 
 const rootReducer = combineReducers({

@@ -1,6 +1,6 @@
 import { Images } from '@assets';
 import { Comment, CommonButton, Input } from '@components';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -11,6 +11,7 @@ import ReportModal from './ReportModal';
 import { styles } from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
 import { commentPost } from '@api';
+import { selectWords, useAppSelector } from '@stores';
 
 export const WordDetail = () => {
     useEffect(() => {
@@ -25,14 +26,16 @@ export const WordDetail = () => {
             console.log('cancel', event),
         );
     }, []);
-
     const route: any = useRoute();
     let { item }: { item: CharsItem } = route.params || {};
+
+    const words = useAppSelector(selectWords);
+    const myWord = words?.myWords?.find(word => word?.id === item?.id);
 
     const onTextToSpeech = (text: string) => {
         Tts.speak(text);
     };
-
+    console.log(words, myWord);
     const [reportModalVisible, setReportModalVisible] = useState(false);
     const [noteModalVisible, setNoteModalVisible] = useState(false);
     const [comments, setComments] = useState<CharsComment[]>(
@@ -40,11 +43,6 @@ export const WordDetail = () => {
     );
     const [content, setContent] = useState<string>('');
     const [author_name, setAuthorName] = useState<string>('');
-    const navigation: any = useNavigation();
-
-    const handleGoback = useCallback(() => {
-        // navigation.goBack();
-    }, [navigation]);
 
     const handleReportModalVisible = useCallback(() => {
         setReportModalVisible(!reportModalVisible);
@@ -104,12 +102,17 @@ export const WordDetail = () => {
                 <Text style={styles.meaning}>{item?.meaning}</Text>
                 <Text style={styles.note}>{item?.note}</Text>
 
-                <View style={styles.noteButton}>
-                    <CommonButton
-                        title="Note lại để học sau"
-                        onPress={handleNoteModalVisible}
-                    />
-                </View>
+                {!!myWord && myWord.myNote ? (
+                    <></>
+                ) : (
+                    <View style={styles.noteButton}>
+                        <CommonButton
+                            title="Note lại để học sau"
+                            onPress={handleNoteModalVisible}
+                        />
+                    </View>
+                )}
+
                 <View style={styles.comment}>
                     <Text style={styles.commentHeading}>Các góp ý</Text>
                     <ScrollView style={styles.commentContainer}>

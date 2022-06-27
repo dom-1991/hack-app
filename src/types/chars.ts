@@ -31,6 +31,10 @@ export interface CharsItem {
     comment: CharsComment[];
 }
 
+export interface CharsMyItem extends CharsItem {
+    myNote: string;
+}
+
 export interface CharsCommentInteract {
     id: number;
     status: StatusEnum;

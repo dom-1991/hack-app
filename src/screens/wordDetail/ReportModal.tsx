@@ -2,7 +2,7 @@ import { reportWords } from '@api';
 import { Spacing } from '@assets';
 import { CustomModal, Input } from '@components';
 import React, { memo, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 interface ReportModalProps {
     onGoback: () => void;
@@ -19,6 +19,7 @@ const ReportModal = (props: ReportModalProps) => {
         char: '',
         content: '',
     });
+    const [error, setError] = useState('');
 
     const handleChangeValue = (value: string, type: string) => {
         let reportContentUpdated = { ...reportContent };
@@ -35,13 +36,19 @@ const ReportModal = (props: ReportModalProps) => {
     };
 
     const onSendReport = async () => {
-        try {
-            const response: any = await reportWords(reportContent);
-            if (response.code === 200) {
+        setError('');
+        if (reportContent.char && reportContent.content) {
+            try {
+                await reportWords(reportContent);
+                setReportContent({ char: '', content: '' });
+            } catch {
+                setError('Có lỗi sảy ra');
             }
-        } catch (error) {
-            console.log(error);
         }
+        // } else {
+        //     setError('Chưa nhập nội dung');
+        // }
+
         onGoback();
     };
     return (
@@ -51,19 +58,20 @@ const ReportModal = (props: ReportModalProps) => {
             onClose={onSendReport}>
             <View style={styles.container}>
                 <Input
-                    label="Nghĩa tiếng Việt"
+                    label="Từ"
                     value={reportContent.char}
                     onChangeValue={value => handleChangeValue(value, 'char')}
-                    placeholder="Nghĩa"
+                    placeholder="日"
                 />
                 <Input
-                    label="Nghĩa tiếng Việt"
+                    label="Nội dung vấn đề"
                     value={reportContent.content}
                     onChangeValue={value => handleChangeValue(value, 'content')}
-                    placeholder="Cách nhớ"
+                    placeholder="từ đang có vấn đề là...."
                     multiline
                     numberOfLines={5}
                 />
+                <Text style={styles.error}>{error}</Text>
             </View>
         </CustomModal>
     );
@@ -72,6 +80,9 @@ const ReportModal = (props: ReportModalProps) => {
 const styles = StyleSheet.create({
     container: {
         paddingTop: Spacing.height16,
+    },
+    error: {
+        color: 'red',
     },
 });
 

@@ -1,10 +1,12 @@
 import { CustomModal, Input } from '@components';
+import { noteMyWord, useAppDispatch } from '@stores';
+import { CharsItem, CharsMyItem } from '@types';
 import React, { memo, useState } from 'react';
 import { Text, View } from 'react-native';
 import { styles } from './styles';
 
 interface NoteModalProps {
-    word: Home.Word;
+    word: CharsItem;
     onGoback: () => void;
     modalVisible: boolean;
     onModalVisible: () => void;
@@ -13,16 +15,28 @@ interface NoteModalProps {
 const NoteModal = (props: NoteModalProps) => {
     const { word, onGoback, modalVisible, onModalVisible } = props;
     const [value, setValue] = useState<string>('');
+    const dispatch = useAppDispatch();
 
     const handleChangeValue = (text: string) => {
         setValue(text);
+    };
+
+    const handleNote = () => {
+        if (value) {
+            const myWord: CharsMyItem = {
+                ...word,
+                myNote: value,
+            };
+            dispatch(noteMyWord(myWord));
+        }
+        onGoback();
     };
 
     return (
         <CustomModal
             modalVisible={modalVisible}
             onModalVisible={onModalVisible}
-            onClose={onGoback}>
+            onClose={handleNote}>
             {/* <View style={styles.container}> */}
             <View style={[styles.top, styles.topNoteModal]}>
                 <View>

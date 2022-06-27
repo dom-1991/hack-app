@@ -41,10 +41,10 @@ export const styles = StyleSheet.create({
         fontSize: FontSize.Font24,
         marginTop: Spacing.height20,
         color: 'rgba(0, 0, 0, 0.87)',
+        marginBottom: Spacing.height40,
     },
 
     noteButton: {
-        marginTop: Spacing.height40,
         marginBottom: Spacing.height28,
     },
 
