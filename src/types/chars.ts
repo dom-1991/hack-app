@@ -1,10 +1,11 @@
-import { StatusEnum } from '@enum';
+import { StatusEnum, WordTypeEnum } from '@enum';
 
 export interface CharsSearch {
     search?: string;
     book?: string;
     search_kanji?: string;
     page?: number;
+    type?: WordTypeEnum;
 }
 
 export interface CharsComment {
@@ -33,6 +34,7 @@ export interface CharsItem {
 
 export interface CharsMyItem extends CharsItem {
     myNote: string;
+    isLearn: boolean;
 }
 
 export interface CharsCommentInteract {

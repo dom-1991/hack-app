@@ -12,6 +12,7 @@ interface ReportModalProps {
 
 const ReportModal = (props: ReportModalProps) => {
     const { onGoback, modalVisible, onModalVisible } = props;
+    const [thank, setThank] = useState<boolean>(false);
     const [reportContent, setReportContent] = useState<{
         char: string;
         content: string;
@@ -37,19 +38,25 @@ const ReportModal = (props: ReportModalProps) => {
 
     const onSendReport = async () => {
         setError('');
-        if (reportContent.char && reportContent.content) {
-            try {
-                await reportWords(reportContent);
-                setReportContent({ char: '', content: '' });
-            } catch {
-                setError('Có lỗi sảy ra');
+        if (thank) {
+            setThank(false);
+            onGoback();
+        } else {
+            if (reportContent.char && reportContent.content) {
+                try {
+                    await reportWords(reportContent);
+                    setReportContent({ char: '', content: '' });
+                } catch {
+                    setError('Có lỗi sảy ra');
+                }
+                setThank(true);
+            } else {
+                onGoback();
             }
+            // } else {
+            //     setError('Chưa nhập nội dung');
+            // }
         }
-        // } else {
-        //     setError('Chưa nhập nội dung');
-        // }
-
-        onGoback();
     };
     return (
         <CustomModal
@@ -57,21 +64,34 @@ const ReportModal = (props: ReportModalProps) => {
             onModalVisible={onModalVisible}
             onClose={onSendReport}>
             <View style={styles.container}>
-                <Input
-                    label="Từ"
-                    value={reportContent.char}
-                    onChangeValue={value => handleChangeValue(value, 'char')}
-                    placeholder="日"
-                />
-                <Input
-                    label="Nội dung vấn đề"
-                    value={reportContent.content}
-                    onChangeValue={value => handleChangeValue(value, 'content')}
-                    placeholder="từ đang có vấn đề là...."
-                    multiline
-                    numberOfLines={5}
-                />
-                <Text style={styles.error}>{error}</Text>
+                {thank ? (
+                    <>
+                        <Text>Cám ơn bạn đã đóng góp!</Text>
+                        <Text>Chúng mình đã ghi lại cẩn thận rùi nha.</Text>
+                    </>
+                ) : (
+                    <>
+                        <Input
+                            label="Từ"
+                            value={reportContent.char}
+                            onChangeValue={value =>
+                                handleChangeValue(value, 'char')
+                            }
+                            placeholder="日"
+                        />
+                        <Input
+                            label="Nội dung vấn đề"
+                            value={reportContent.content}
+                            onChangeValue={value =>
+                                handleChangeValue(value, 'content')
+                            }
+                            placeholder="từ đang có vấn đề là...."
+                            multiline
+                            numberOfLines={5}
+                        />
+                        <Text style={styles.error}>{error}</Text>
+                    </>
+                )}
             </View>
         </CustomModal>
     );

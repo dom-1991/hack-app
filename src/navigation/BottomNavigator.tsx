@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home, Profile, WordDetail } from '@screens';
+import { Home, KanjiScreen, Profile, WordDetail } from '@screens';
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
 
@@ -37,7 +37,7 @@ const bottomTabScreens = [
     },
     {
         name: 'Japan',
-        screen: WordDetail,
+        screen: KanjiScreen,
         iconActive: Images.japanIconActive,
         iconUnActive: Images.japanIcon,
         styleIcon: styles.bottomTabJapanIcon,

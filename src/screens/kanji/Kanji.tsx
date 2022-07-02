@@ -10,19 +10,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { debounce } from 'lodash';
 
-import { Input, CommonButton, Word } from '@components';
 import { Images, Spacing } from '@assets';
-import { getWords } from '@api';
+import { CommonButton, Input, Word } from '@components';
 import { CharsItem, CharsSearch } from '@types';
+import { getWords } from '@api';
 import { WordTypeEnum } from '@enum';
 
-const Home = () => {
-    // const words = useAppSelector(selectWords);
+export const KanjiScreen = () => {
     const [page, setPage] = useState(1);
     const [value, setValue] = useState<string>('');
     const [isError, setIsError] = useState<boolean>(false);
     const [words, setWords] = useState<CharsItem[]>([]);
-    const [refreshing, setRefreshing] = React.useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     const navigation: any = useNavigation();
 
@@ -30,11 +29,11 @@ const Home = () => {
         fetchWords(1, '');
     }, []);
 
-    const fetchWords = async (movePage: number, search: string) => {
+    const fetchWords = async (movePage: number, search_kanji: string) => {
         const params: CharsSearch = {
             page: movePage,
-            search,
-            type: WordTypeEnum.Word,
+            search_kanji,
+            type: WordTypeEnum.Kanji,
         };
 
         try {
@@ -67,8 +66,6 @@ const Home = () => {
         handleChangeWord(text);
     };
 
-    // console.log(words);
-
     const onNavigateAddWordScreen = () => {
         navigation.navigate('AddWord');
     };
@@ -95,7 +92,7 @@ const Home = () => {
                 wordDescription={item?.read}
                 translateTitle={item?.meaning}
                 translateDescription={item?.note}
-                onPress={() => navigation.navigate('WordDetail', { item })}
+                onPress={() => navigation.navigate('KanjiDetail', { item })}
             />
         );
     };
@@ -111,7 +108,6 @@ const Home = () => {
                     error={!words.length ? 'Tiếc ghê không có từ này' : ''}
                 />
             </View>
-
             {words.length ? (
                 <FlatList
                     data={words as []}
@@ -167,5 +163,3 @@ const styles = StyleSheet.create({
         paddingHorizontal: Spacing.height20,
     },
 });
-
-export { Home };

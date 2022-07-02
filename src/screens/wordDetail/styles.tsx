@@ -21,9 +21,16 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-start',
     },
+    kanjiTop: {
+        alignItems: 'center',
+    },
 
     word: {
         fontSize: FontSize.Font24,
+    },
+
+    kanjiWord: {
+        fontSize: FontSize.Font65,
     },
 
     read: {
@@ -37,11 +44,30 @@ export const styles = StyleSheet.create({
         color: 'rgba(0, 0, 0, 0.87)',
     },
 
+    kanjiMeaning: {
+        fontSize: FontSize.Font24,
+        marginTop: Spacing.height32,
+        marginBottom: Spacing.height12,
+        color: 'rgba(0, 0, 0, 0.87)',
+    },
+
     note: {
         fontSize: FontSize.Font24,
         marginTop: Spacing.height20,
         color: 'rgba(0, 0, 0, 0.87)',
         marginBottom: Spacing.height40,
+    },
+
+    kanjiNote: {
+        fontSize: FontSize.Font16,
+        marginBottom: Spacing.height30,
+        color: 'rgba(0, 0, 0, 0.87)',
+    },
+
+    kanjiSmallNote: {
+        fontSize: FontSize.Font16,
+        marginBottom: Spacing.height10,
+        color: 'rgba(0, 0, 0, 0.87)',
     },
 
     noteButton: {

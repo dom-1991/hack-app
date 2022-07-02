@@ -32,7 +32,7 @@ axiosClient.interceptors.request.use((config: any) => {
 });
 
 axiosClient.interceptors.response.use(response => {
-    console.log('===========> API STATUS', response.status);
+    console.log('===========> API RES', response);
     if (response && response.data) {
         return response.data;
     }

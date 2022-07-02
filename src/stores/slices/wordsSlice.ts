@@ -44,11 +44,28 @@ export const wordsSlice = createSlice({
                 state.myWords = [...myWords, { ...item }];
             }
         },
+        removeMyWord: (state, action: PayloadAction<number>) => {
+            const id = action.payload;
+            const { myWords } = state;
+
+            const myWordIndex = myWords.findIndex(word => word.id === id);
+            if (myWordIndex >= 0) {
+                state.myWords = [
+                    ...myWords.slice(0, myWordIndex),
+                    ...myWords.slice(myWordIndex),
+                ];
+            }
+        },
     },
 });
 
-export const { resetWords, unlikeComment, likeComment, noteMyWord } =
-    wordsSlice.actions;
+export const {
+    resetWords,
+    unlikeComment,
+    likeComment,
+    noteMyWord,
+    removeMyWord,
+} = wordsSlice.actions;
 
 export const selectWords = (state: RootState) => state.words;
 

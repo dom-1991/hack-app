@@ -174,6 +174,26 @@ export const FontSize = {
         RFPercentage(BASE_FONT_SIZE + ReduceTextFor18_9(4.5)),
         45,
     ),
+
+    Font50: calculateFontsize(
+        RFPercentage(BASE_FONT_SIZE + ReduceTextFor18_9(5)),
+        50,
+    ),
+
+    Font55: calculateFontsize(
+        RFPercentage(BASE_FONT_SIZE + ReduceTextFor18_9(5.5)),
+        55,
+    ),
+
+    Font60: calculateFontsize(
+        RFPercentage(BASE_FONT_SIZE + ReduceTextFor18_9(6)),
+        60,
+    ),
+
+    Font65: calculateFontsize(
+        RFPercentage(BASE_FONT_SIZE + ReduceTextFor18_9(6.5)),
+        65,
+    ),
 };
 
 export const FontWithBold = StyleSheet.create({

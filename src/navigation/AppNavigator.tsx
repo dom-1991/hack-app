@@ -2,7 +2,14 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { BottomTabNavigator } from './BottomNavigator';
-import { AddWord, Contact, WordDetail, MyWord } from '@screens';
+import {
+    AddWord,
+    Contact,
+    WordDetail,
+    MyWord,
+    KanjiScreen,
+    KanjiDetail,
+} from '@screens';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +35,16 @@ function AppNavigator() {
                 options={{ title: '' }}
                 name="WordDetail"
                 component={WordDetail}
+            />
+            <Stack.Screen
+                options={{ title: '' }}
+                name="KanjiScreen"
+                component={KanjiScreen}
+            />
+            <Stack.Screen
+                options={{ title: '' }}
+                name="KanjiDetail"
+                component={KanjiDetail}
             />
             <Stack.Screen
                 options={{ title: 'Từ của tôi' }}

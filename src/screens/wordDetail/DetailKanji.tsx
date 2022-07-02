@@ -1,10 +1,8 @@
-import { Images } from '@assets';
 import { Comment, CommonButton, Input } from '@components';
 import { useRoute } from '@react-navigation/native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Tts from 'react-native-tts';
 import { CharsComment, CharsItem } from '@types';
 import NoteModal from './NoteModal';
 import ReportModal from './ReportModal';
@@ -13,28 +11,13 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { commentPost } from '@api';
 import { selectWords, useAppSelector } from '@stores';
 
-export const WordDetail = () => {
-    useEffect(() => {
-        Tts.addEventListener('tts-start', event => console.log('start', event));
-        Tts.addEventListener('tts-progress', event =>
-            console.log('progress', event),
-        );
-        Tts.addEventListener('tts-finish', event =>
-            console.log('finish', event),
-        );
-        Tts.addEventListener('tts-cancel', event =>
-            console.log('cancel', event),
-        );
-    }, []);
+export const KanjiDetail = () => {
     const route: any = useRoute();
     let { item }: { item: CharsItem } = route.params || {};
 
     const words = useAppSelector(selectWords);
     const myWord = words?.myWords?.find(word => word?.id === item?.id);
 
-    const onTextToSpeech = (text: string) => {
-        Tts.speak(text);
-    };
     const [reportModalVisible, setReportModalVisible] = useState(false);
     const [noteModalVisible, setNoteModalVisible] = useState(false);
     const [comments, setComments] = useState<CharsComment[]>(
@@ -78,28 +61,21 @@ export const WordDetail = () => {
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={styles.inner}>
-                <View style={styles.top}>
-                    <View>
-                        <Text style={styles.word}>{item?.word}</Text>
-                    </View>
-                    <View>
-                        <TouchableOpacity
-                            activeOpacity={0.8}
-                            onPress={() => {
-                                onTextToSpeech(item?.read);
-                            }}>
-                            <Image
-                                source={Images.sound}
-                                style={styles.soundIcon}
-                            />
-                        </TouchableOpacity>
+                <View style={styles.kanjiTop}>
+                    <Text style={styles.kanjiWord}>{item?.word}</Text>
 
-                        <Text style={styles.read}>{item?.read}</Text>
-                    </View>
+                    <Text style={styles.kanjiMeaning}>{item?.reading}</Text>
+                    <Text style={styles.kanjiNote}>{item?.note}</Text>
                 </View>
-
-                <Text style={styles.meaning}>{item?.meaning}</Text>
-                <Text style={styles.note}>{item?.note}</Text>
+                <View style={styles.kanjiSmallNote}>
+                    <Text>Nghĩa: {item?.meaning}</Text>
+                </View>
+                <View style={styles.kanjiSmallNote}>
+                    <Text>Âm Kun:{item?.kun}</Text>
+                </View>
+                <View style={styles.kanjiSmallNote}>
+                    <Text>Âm On: {item?.on}</Text>
+                </View>
 
                 {!!myWord && myWord.myNote ? (
                     <></>

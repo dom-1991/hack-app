@@ -12,11 +12,13 @@ import { useNavigation } from '@react-navigation/native';
 
 import { Word } from '@components';
 import { FontSize, FontWithBold, Spacing } from '@assets';
+import { selectWords, useAppSelector } from '@stores';
+import { CharsMyItem } from '@types';
 
 const MyWord = () => {
     const tabs = ['Cần học', 'Đã xong', 'Tất cả'];
+    const { myWords } = useAppSelector(selectWords);
 
-    const words: any = [];
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [page, setPage] = useState<number>(1);
     const [indexTabActive, setIndexTabActive] = useState(2);
@@ -28,12 +30,7 @@ const MyWord = () => {
         // dispatch(fetchWordsAsync());
     }, []);
 
-    const onLoadMore = () => {
-        setPage((prevPage: number) => {
-            // dispatch(getWordsPagination(prevPage + 1));
-            return prevPage + 1;
-        });
-    };
+    const onLoadMore = () => {};
 
     const onRefresh = () => {
         setRefreshing(true);
@@ -45,17 +42,23 @@ const MyWord = () => {
         setIndexTabActive(index);
     };
 
-    const renderItem = ({ item }: any) => {
-        return (
-            <Word
-                key={item?.id}
-                wordTitle={item?.word}
-                wordDescription={item?.read}
-                translateTitle={item?.meaning}
-                translateDescription={item?.note}
-                onPress={() => navigation.navigate('WordDetail', { item })}
-            />
-        );
+    const renderItem = ({ item }: { item: CharsMyItem }) => {
+        const isNeedToRead = indexTabActive === 0 && !item.isLearn;
+        const isRead = indexTabActive === 1 && item.isLearn;
+        if (indexTabActive === 2 || isNeedToRead || isRead) {
+            return (
+                <Word
+                    key={item?.id}
+                    wordTitle={item?.word}
+                    wordDescription={item?.read}
+                    translateTitle={item?.meaning}
+                    translateDescription={item?.note}
+                    onPress={() => navigation.navigate('WordDetail', { item })}
+                />
+            );
+        } else {
+            return <></>;
+        }
     };
 
     return (
@@ -78,11 +81,11 @@ const MyWord = () => {
                 ))}
             </View>
             <FlatList
-                data={words as []}
+                data={myWords}
                 onEndReached={onLoadMore}
                 // onEndThreshold={0}
                 renderItem={renderItem}
-                keyExtractor={(item: { id: string }) => item?.id}
+                keyExtractor={(item: CharsMyItem) => item.id.toString()}
                 refreshControl={
                     <RefreshControl
                         refreshing={refreshing}

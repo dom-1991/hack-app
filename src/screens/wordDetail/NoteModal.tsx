@@ -26,6 +26,7 @@ const NoteModal = (props: NoteModalProps) => {
             const myWord: CharsMyItem = {
                 ...word,
                 myNote: value,
+                isLearn: false,
             };
             dispatch(noteMyWord(myWord));
         }
