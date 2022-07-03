@@ -8,8 +8,10 @@ import {
     WordDetail,
     MyWord,
     KanjiScreen,
-    KanjiDetail,
     MyWordDetail,
+    BookMenuScreen,
+    BookMenuChildScreen,
+    BookList,
 } from '@screens';
 
 const Stack = createStackNavigator();
@@ -43,14 +45,24 @@ function AppNavigator() {
                 component={KanjiScreen}
             />
             <Stack.Screen
-                options={{ title: '' }}
-                name="KanjiDetail"
-                component={KanjiDetail}
-            />
-            <Stack.Screen
                 options={{ title: 'Từ của tôi' }}
                 name="MyWord"
                 component={MyWord}
+            />
+            <Stack.Screen
+                options={{ title: '' }}
+                name="BookMenu"
+                component={BookMenuScreen}
+            />
+            <Stack.Screen
+                options={{ title: '' }}
+                name="BookMenuChild"
+                component={BookMenuChildScreen}
+            />
+            <Stack.Screen
+                options={{ title: '' }}
+                name="BookList"
+                component={BookList}
             />
             <Stack.Screen
                 options={{ title: '' }}

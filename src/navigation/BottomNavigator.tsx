@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home, KanjiScreen, Profile, WordDetail } from '@screens';
+import { Home, KanjiScreen, Profile } from '@screens';
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
 

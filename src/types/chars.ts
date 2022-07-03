@@ -42,3 +42,9 @@ export interface CharsCommentInteract {
     status: StatusEnum;
     device_fcm: string;
 }
+
+export interface BookMenu {
+    title: string;
+    book?: string;
+    child?: BookMenu[];
+}
