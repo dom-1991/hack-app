@@ -7,10 +7,11 @@ interface CustomModalProps {
     modalVisible: boolean;
     onModalVisible: () => void;
     onClose: () => void;
+    onCancel?: () => void;
 }
 
 export const CustomModal: React.FC<CustomModalProps> = props => {
-    const { modalVisible, onModalVisible, onClose, children } = props;
+    const { modalVisible, onModalVisible, onClose, children, onCancel } = props;
     return (
         <Modal
             animationType="fade"
@@ -27,6 +28,15 @@ export const CustomModal: React.FC<CustomModalProps> = props => {
                             title="OK"
                             onPress={onClose}
                         />
+                        {onCancel ? (
+                            <CommonButton
+                                type="small"
+                                title="Cancel"
+                                onPress={onCancel}
+                            />
+                        ) : (
+                            <></>
+                        )}
                     </View>
                 </View>
             </View>
@@ -60,5 +70,9 @@ const styles = StyleSheet.create({
     button: {
         marginTop: Spacing.height16,
         alignSelf: 'center',
+        flexDirection: 'row-reverse',
+    },
+    buttonCancel: {
+        marginRight: Spacing.height10,
     },
 });

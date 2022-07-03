@@ -87,6 +87,7 @@ const ReportModal = (props: ReportModalProps) => {
                             }
                             placeholder="từ đang có vấn đề là...."
                             multiline
+                            blurOnSubmit={true}
                             numberOfLines={5}
                         />
                         <Text style={styles.error}>{error}</Text>

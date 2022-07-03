@@ -15,4 +15,6 @@ export const Images = {
     unlikeActive: require(`${path}unlikeActive.png`),
     momo: require(`${path}momo.png`),
     bank: require(`${path}bank.png`),
+    edit: require(`${path}edit.png`),
+    trash: require(`${path}trash.png`),
 };

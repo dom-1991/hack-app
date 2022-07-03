@@ -1,12 +1,12 @@
 import { CustomModal, Input } from '@components';
 import { noteMyWord, useAppDispatch } from '@stores';
-import { CharsItem, CharsMyItem } from '@types';
+import { CharsMyItem } from '@types';
 import React, { memo, useState } from 'react';
 import { Text, View } from 'react-native';
 import { styles } from './styles';
 
 interface NoteModalProps {
-    word: CharsItem;
+    word: CharsMyItem;
     onGoback: () => void;
     modalVisible: boolean;
     onModalVisible: () => void;
@@ -14,7 +14,7 @@ interface NoteModalProps {
 
 const NoteModal = (props: NoteModalProps) => {
     const { word, onGoback, modalVisible, onModalVisible } = props;
-    const [value, setValue] = useState<string>('');
+    const [value, setValue] = useState<string>(word?.myNote || '');
     const dispatch = useAppDispatch();
 
     const handleChangeValue = (text: string) => {
@@ -26,7 +26,7 @@ const NoteModal = (props: NoteModalProps) => {
             const myWord: CharsMyItem = {
                 ...word,
                 myNote: value,
-                isLearn: false,
+                isLearn: word?.isLearn || false,
             };
             dispatch(noteMyWord(myWord));
         }
@@ -58,6 +58,7 @@ const NoteModal = (props: NoteModalProps) => {
                 onChangeValue={handleChangeValue}
                 placeholder="Chú thích của bạn"
                 multiline
+                blurOnSubmit={true}
                 numberOfLines={5}
             />
         </CustomModal>

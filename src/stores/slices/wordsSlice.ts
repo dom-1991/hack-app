@@ -34,11 +34,12 @@ export const wordsSlice = createSlice({
             const myWords = state?.myWords || [];
 
             const exitedItem = myWords.findIndex(word => word.id === item.id);
+
             if (exitedItem >= 0) {
                 state.myWords = [
                     ...myWords.slice(0, exitedItem),
                     { ...item },
-                    ...myWords.slice(exitedItem),
+                    ...myWords.slice(exitedItem + 1),
                 ];
             } else {
                 state.myWords = [...myWords, { ...item }];
@@ -52,7 +53,7 @@ export const wordsSlice = createSlice({
             if (myWordIndex >= 0) {
                 state.myWords = [
                     ...myWords.slice(0, myWordIndex),
-                    ...myWords.slice(myWordIndex),
+                    ...myWords.slice(myWordIndex + 1),
                 ];
             }
         },

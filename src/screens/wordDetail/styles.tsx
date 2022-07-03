@@ -36,6 +36,7 @@ export const styles = StyleSheet.create({
     read: {
         fontSize: FontSize.Font14,
         color: 'rgba(0, 0, 0, 0.78)',
+        textAlign: 'center',
     },
 
     meaning: {
@@ -64,6 +65,12 @@ export const styles = StyleSheet.create({
         color: 'rgba(0, 0, 0, 0.87)',
     },
 
+    myNote: {
+        fontSize: FontSize.Font13,
+        marginBottom: Spacing.height60,
+        color: 'rgba(0, 0, 0, 0.87)',
+    },
+
     kanjiSmallNote: {
         fontSize: FontSize.Font16,
         marginBottom: Spacing.height10,
@@ -75,9 +82,22 @@ export const styles = StyleSheet.create({
     },
 
     soundIcon: {
-        width: Spacing.width21,
-        height: Spacing.height18,
+        width: Spacing.width24,
+        height: Spacing.height21,
         marginBottom: Spacing.height10,
+    },
+
+    editIcon: {
+        width: Spacing.width24,
+        height: Spacing.height21,
+        marginBottom: Spacing.height10,
+        marginLeft: Spacing.height15,
+    },
+    trashIcon: {
+        width: Spacing.width16,
+        height: Spacing.height21,
+        marginBottom: Spacing.height10,
+        marginLeft: Spacing.height15,
     },
 
     comment: {},

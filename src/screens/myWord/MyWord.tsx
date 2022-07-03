@@ -53,7 +53,9 @@ const MyWord = () => {
                     wordDescription={item?.read}
                     translateTitle={item?.meaning}
                     translateDescription={item?.note}
-                    onPress={() => navigation.navigate('WordDetail', { item })}
+                    onPress={() =>
+                        navigation.navigate('MyWordDetail', { item })
+                    }
                 />
             );
         } else {

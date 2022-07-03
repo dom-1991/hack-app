@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
         paddingVertical: Spacing.height8,
         // marginHorizontal: Spacing.width25,
         borderRadius: Spacing.width20,
+        marginHorizontal: Spacing.height10,
     },
 
     buttonSmall: {

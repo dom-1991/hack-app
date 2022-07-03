@@ -33,8 +33,8 @@ export interface CharsItem {
 }
 
 export interface CharsMyItem extends CharsItem {
-    myNote: string;
-    isLearn: boolean;
+    myNote?: string;
+    isLearn?: boolean;
 }
 
 export interface CharsCommentInteract {

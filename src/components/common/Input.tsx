@@ -10,6 +10,7 @@ interface InputProps {
     multiline?: boolean;
     numberOfLines?: number;
     onChangeValue: (value: string) => void;
+    blurOnSubmit?: boolean;
     error?: string;
     size?: string;
 }
@@ -23,6 +24,7 @@ export const Input = (props: InputProps) => {
         placeholder,
         numberOfLines,
         error,
+        blurOnSubmit,
         size,
     } = props;
 
@@ -35,6 +37,7 @@ export const Input = (props: InputProps) => {
         <View style={styles.container}>
             {!!label?.length && <Text style={styles.label}>{label}</Text>}
             <TextInput
+                blurOnSubmit={blurOnSubmit}
                 style={styleInput}
                 onChangeText={onChangeValue}
                 value={value}
