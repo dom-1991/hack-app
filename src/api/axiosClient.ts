@@ -23,10 +23,7 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use((config: any) => {
-    let token = '';
-    const { data, url } = config;
-    console.log('================> API CALL', { data, url });
-    config.headers.Authorization = `Bearer ${token}`;
+    console.log('================> API CALL', config);
     delete axios.defaults.headers.common['Accept-Encoding'];
     return config;
 });

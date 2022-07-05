@@ -7,7 +7,7 @@ import {
     Contact,
     WordDetail,
     MyWord,
-    KanjiScreen,
+    KanjiDetail,
     MyWordDetail,
     BookMenuScreen,
     BookMenuChildScreen,
@@ -41,8 +41,8 @@ function AppNavigator() {
             />
             <Stack.Screen
                 options={{ title: '' }}
-                name="KanjiScreen"
-                component={KanjiScreen}
+                name="KanjiDetail"
+                component={KanjiDetail}
             />
             <Stack.Screen
                 options={{ title: 'Từ của tôi' }}

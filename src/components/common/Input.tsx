@@ -6,6 +6,7 @@ import { Spacing, FontSize } from '@assets';
 interface InputProps {
     value: string;
     label?: string;
+    name?: string;
     placeholder: string;
     multiline?: boolean;
     numberOfLines?: number;
@@ -26,6 +27,7 @@ export const Input = (props: InputProps) => {
         error,
         blurOnSubmit,
         size,
+        name,
     } = props;
 
     const styleInput = [
@@ -39,6 +41,7 @@ export const Input = (props: InputProps) => {
             <TextInput
                 blurOnSubmit={blurOnSubmit}
                 style={styleInput}
+                name={name}
                 onChangeText={onChangeValue}
                 value={value}
                 placeholder={placeholder}

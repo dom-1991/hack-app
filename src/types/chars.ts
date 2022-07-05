@@ -48,3 +48,10 @@ export interface BookMenu {
     book?: string;
     child?: BookMenu[];
 }
+
+export interface NewChars {
+    word: string;
+    reading: string;
+    note: string;
+    meaning: string;
+}
