@@ -23,7 +23,7 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use((config: any) => {
-    console.log('================> API CALL', config);
+    console.log('================> API CALL', config.url, config);
     delete axios.defaults.headers.common['Accept-Encoding'];
     return config;
 });

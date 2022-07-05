@@ -10,36 +10,34 @@ import NoteModal from './NoteModal';
 import ReportModal from './ReportModal';
 import { styles } from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
-import { commentPost } from '@api';
+import { commentPost, getWord } from '@api';
 import { selectWords, useAppSelector } from '@stores';
 
 export const WordDetail = () => {
-    useEffect(() => {
-        Tts.addEventListener('tts-start', event => console.log('start', event));
-        Tts.addEventListener('tts-progress', event =>
-            console.log('progress', event),
-        );
-        Tts.addEventListener('tts-finish', event =>
-            console.log('finish', event),
-        );
-        Tts.addEventListener('tts-cancel', event =>
-            console.log('cancel', event),
-        );
-    }, []);
     const route: any = useRoute();
     let { item }: { item: CharsItem } = route.params || {};
+    const [word, setWord] = useState(item);
 
     const words = useAppSelector(selectWords);
     const myWord = words?.myWords?.find(word => word?.id === item?.id);
 
+    const fetchWord = useCallback(async () => {
+        try {
+            const res = await getWord(item.id);
+            setWord(res.data);
+        } catch {
+            //
+        }
+    }, [item.id]);
+    useEffect(() => {
+        fetchWord();
+    }, [fetchWord]);
     const onTextToSpeech = (text: string) => {
         Tts.speak(text);
     };
     const [reportModalVisible, setReportModalVisible] = useState(false);
     const [noteModalVisible, setNoteModalVisible] = useState(false);
-    const [comments, setComments] = useState<CharsComment[]>(
-        item?.comment || [],
-    );
+
     const [content, setContent] = useState<string>('');
     const [author_name, setAuthorName] = useState<string>('');
 
@@ -60,10 +58,7 @@ export const WordDetail = () => {
                     content,
                 };
                 await commentPost(params);
-                setComments([
-                    ...comments,
-                    { id: Date.now(), author_name, content },
-                ]);
+                fetchWord();
                 setContent('');
             } catch {
                 //
@@ -115,7 +110,7 @@ export const WordDetail = () => {
                 <View style={styles.comment}>
                     <Text style={styles.commentHeading}>Các góp ý</Text>
                     <ScrollView style={styles.commentContainer}>
-                        {comments.map(comment => (
+                        {word.comment.map(comment => (
                             <Comment comment={comment} key={comment.id} />
                         ))}
                     </ScrollView>

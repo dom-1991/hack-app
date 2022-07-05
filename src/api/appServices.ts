@@ -19,6 +19,12 @@ export const getWords = (params?: CharsSearch) => {
     return axiosClient.get(url);
 };
 
+export const getWord = (id: number) => {
+    let url = API_ENDPOINT + '/api/chars/' + id;
+
+    return axiosClient.get(url);
+};
+
 export const addWords = (params?: NewChars) => {
     let url = API_ENDPOINT + '/api/chars';
     return axiosClient.post(url, params);
