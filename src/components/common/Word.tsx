@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { Spacing, FontSize } from '@assets';
-import { limitWord } from '@utils';
+import { limitChar } from '@utils';
 
 interface WordProps {
     wordTitle: string;
@@ -34,7 +34,7 @@ export const Word = (props: WordProps) => {
                 </View>
                 <View>
                     <Text style={styles.translateTitle}>
-                        {limitWord(translateTitle, 4)}
+                        {limitChar(translateTitle, 15)}
                     </Text>
                 </View>
             </View>

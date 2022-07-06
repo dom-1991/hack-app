@@ -1,10 +1,10 @@
-import { Images } from '@assets';
+// import { Images } from '@assets';
 import { Comment, CommonButton, Input } from '@components';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Tts from 'react-native-tts';
+// import Tts from 'react-native-tts';
 import { CharsComment, CharsItem } from '@types';
 import NoteModal from './NoteModal';
 import ReportModal from './ReportModal';
@@ -32,14 +32,14 @@ export const WordDetail = () => {
     useEffect(() => {
         fetchWord();
     }, [fetchWord]);
-    const onTextToSpeech = (text: string) => {
-        Tts.speak(text);
-    };
+    // const onTextToSpeech = (text: string) => {
+    //     Tts.speak(text);
+    // };
     const [reportModalVisible, setReportModalVisible] = useState(false);
     const [noteModalVisible, setNoteModalVisible] = useState(false);
 
     const [content, setContent] = useState<string>('');
-    const [author_name, setAuthorName] = useState<string>('');
+    const [authorName, setAuthorName] = useState<string>('');
 
     const handleReportModalVisible = useCallback(() => {
         setReportModalVisible(!reportModalVisible);
@@ -50,11 +50,11 @@ export const WordDetail = () => {
     }, [noteModalVisible]);
 
     const handleComment = async () => {
-        if (author_name && content) {
+        if (content) {
             try {
                 const params: CharsComment = {
                     id: item.id,
-                    author_name,
+                    author_name: authorName || 'Người Dùng',
                     content,
                 };
                 await commentPost(params);
@@ -78,7 +78,7 @@ export const WordDetail = () => {
                         <Text style={styles.word}>{item?.word}</Text>
                     </View>
                     <View>
-                        <TouchableOpacity
+                        {/* <TouchableOpacity
                             activeOpacity={0.8}
                             onPress={() => {
                                 onTextToSpeech(item?.read);
@@ -87,7 +87,7 @@ export const WordDetail = () => {
                                 source={Images.sound}
                                 style={styles.soundIcon}
                             />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
 
                         <Text style={styles.read}>{item?.read}</Text>
                     </View>
@@ -96,7 +96,7 @@ export const WordDetail = () => {
                 <Text style={styles.meaning}>{item?.meaning}</Text>
                 <Text style={styles.note}>{item?.note}</Text>
 
-                {!!myWord && myWord.myNote ? (
+                {myWord ? (
                     <></>
                 ) : (
                     <View style={styles.noteButton}>
@@ -127,7 +127,7 @@ export const WordDetail = () => {
                         <Input
                             size="small"
                             placeholder="Tên của bạn"
-                            value={author_name}
+                            value={authorName}
                             onChangeValue={value => {
                                 setAuthorName(value);
                             }}
@@ -142,15 +142,11 @@ export const WordDetail = () => {
                     </View>
                 </View>
 
-                <SafeAreaView
-                    style={styles.reportButton}
-                    edges={['left', 'right', 'bottom']}>
-                    <CommonButton
-                        title="Báo cáo từ này có vấn đề"
-                        backgroundColor="#C4C4C4"
-                        onPress={handleReportModalVisible}
-                    />
-                </SafeAreaView>
+                <TouchableOpacity onPress={handleReportModalVisible}>
+                    <Text style={styles.reportButton}>
+                        Báo cáo từ này có vấn đề
+                    </Text>
+                </TouchableOpacity>
             </ScrollView>
             {item && (
                 <NoteModal

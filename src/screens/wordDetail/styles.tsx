@@ -39,6 +39,12 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
     },
 
+    noteRead: {
+        fontSize: FontSize.Font10,
+        color: 'rgba(0, 0, 0, 0.78)',
+        textAlign: 'center',
+    },
+
     meaning: {
         fontSize: FontSize.Font24,
         marginVertical: Spacing.height16,
@@ -57,6 +63,11 @@ export const styles = StyleSheet.create({
         marginTop: Spacing.height20,
         color: 'rgba(0, 0, 0, 0.87)',
         marginBottom: Spacing.height40,
+    },
+
+    noteMyNote: {
+        fontSize: FontSize.Font14,
+        color: 'rgba(0, 0, 0, 0.78)',
     },
 
     kanjiNote: {
@@ -159,6 +170,7 @@ export const styles = StyleSheet.create({
 
     addComment: {
         marginTop: Spacing.height20,
+        marginBottom: Spacing.height64,
     },
 
     addCommentAction: {
@@ -173,7 +185,8 @@ export const styles = StyleSheet.create({
         width: '100%',
         bottom: 0,
         marginBottom: Spacing.height20,
-        marginTop: Spacing.height20,
+        color: '#C4C4C4',
+        textAlign: 'center',
     },
 
     centerNoteModal: {

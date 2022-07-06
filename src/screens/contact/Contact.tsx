@@ -33,6 +33,12 @@ export const Contact = () => {
                     <Image source={Images.bank} style={styles.bankImage} />
                 </View>
                 <View style={styles.email}>
+                    <Text style={styles.title}>Fanpage:</Text>
+                    <Text style={styles.description}>
+                        https://www.facebook.com/hacknaotiengnhatn12345
+                    </Text>
+                </View>
+                <View style={styles.email}>
                     <Text style={styles.title}>Email:</Text>
                     <Text style={styles.description}>tomuhedspi@gmail.com</Text>
                 </View>
@@ -63,10 +69,10 @@ const styles = StyleSheet.create({
     },
 
     description: {
-        fontSize: FontSize.Font24,
+        fontSize: FontSize.Font12,
         color: '#1DA1F3',
         ...FontWithBold.Bold_300,
-        paddingVertical: Spacing.height8,
+        paddingTop: Spacing.height8,
         textAlign: 'center',
     },
 
@@ -85,8 +91,8 @@ const styles = StyleSheet.create({
     },
 
     email: {
-        marginTop: Spacing.width32,
-        paddingBottom: Spacing.height20,
+        fontSize: FontSize.Font12,
+        marginTop: Spacing.width22,
     },
 
     momoQR: {

@@ -45,7 +45,7 @@ function AppNavigator() {
                 component={KanjiDetail}
             />
             <Stack.Screen
-                options={{ title: 'Từ của tôi' }}
+                options={{ title: 'Note' }}
                 name="MyWord"
                 component={MyWord}
             />

@@ -1,30 +1,40 @@
 import { Comment, CommonButton, Input } from '@components';
 import { useRoute } from '@react-navigation/native';
-import React, { useCallback, useState } from 'react';
-import { Text, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CharsComment, CharsItem } from '@types';
 import NoteModal from './NoteModal';
 import ReportModal from './ReportModal';
 import { styles } from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
-import { commentPost } from '@api';
+import { commentPost, getWord } from '@api';
 import { selectWords, useAppSelector } from '@stores';
 
 export const KanjiDetail = () => {
     const route: any = useRoute();
     let { item }: { item: CharsItem } = route.params || {};
+    const [word, setWord] = useState(item);
 
     const words = useAppSelector(selectWords);
-    const myWord = words?.myWords?.find(word => word?.id === item?.id);
+    const myWord = words?.myWords?.find(wordItem => wordItem?.id === item?.id);
 
+    const fetchWord = useCallback(async () => {
+        try {
+            const res = await getWord(item.id);
+            setWord(res.data);
+        } catch {
+            //
+        }
+    }, [item.id]);
+    useEffect(() => {
+        fetchWord();
+    }, [fetchWord]);
     const [reportModalVisible, setReportModalVisible] = useState(false);
     const [noteModalVisible, setNoteModalVisible] = useState(false);
-    const [comments, setComments] = useState<CharsComment[]>(
-        item?.comment || [],
-    );
+
     const [content, setContent] = useState<string>('');
-    const [author_name, setAuthorName] = useState<string>('');
+    const [authorName, setAuthorName] = useState<string>('');
 
     const handleReportModalVisible = useCallback(() => {
         setReportModalVisible(!reportModalVisible);
@@ -35,18 +45,15 @@ export const KanjiDetail = () => {
     }, [noteModalVisible]);
 
     const handleComment = async () => {
-        if (author_name && content) {
+        if (content) {
             try {
                 const params: CharsComment = {
                     id: item.id,
-                    author_name,
+                    author_name: authorName || 'Người Dùng',
                     content,
                 };
                 await commentPost(params);
-                setComments([
-                    ...comments,
-                    { id: Date.now(), author_name, content },
-                ]);
+                fetchWord();
                 setContent('');
             } catch {
                 //
@@ -77,7 +84,7 @@ export const KanjiDetail = () => {
                     <Text>Âm On: {item?.on}</Text>
                 </View>
 
-                {!!myWord && myWord.myNote ? (
+                {myWord ? (
                     <></>
                 ) : (
                     <View style={styles.noteButton}>
@@ -91,7 +98,7 @@ export const KanjiDetail = () => {
                 <View style={styles.comment}>
                     <Text style={styles.commentHeading}>Các góp ý</Text>
                     <ScrollView style={styles.commentContainer}>
-                        {comments.map(comment => (
+                        {word.comment.map(comment => (
                             <Comment comment={comment} key={comment.id} />
                         ))}
                     </ScrollView>
@@ -108,7 +115,7 @@ export const KanjiDetail = () => {
                         <Input
                             size="small"
                             placeholder="Tên của bạn"
-                            value={author_name}
+                            value={authorName}
                             onChangeValue={value => {
                                 setAuthorName(value);
                             }}
@@ -123,15 +130,11 @@ export const KanjiDetail = () => {
                     </View>
                 </View>
 
-                <SafeAreaView
-                    style={styles.reportButton}
-                    edges={['left', 'right', 'bottom']}>
-                    <CommonButton
-                        title="Báo cáo từ này có vấn đề"
-                        backgroundColor="#C4C4C4"
-                        onPress={handleReportModalVisible}
-                    />
-                </SafeAreaView>
+                <TouchableOpacity onPress={handleReportModalVisible}>
+                    <Text style={styles.reportButton}>
+                        Báo cáo từ này có vấn đề
+                    </Text>
+                </TouchableOpacity>
             </ScrollView>
             {item && (
                 <NoteModal

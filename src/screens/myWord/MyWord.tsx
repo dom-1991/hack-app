@@ -19,9 +19,7 @@ const MyWord = () => {
     const tabs = ['Cần học', 'Đã xong', 'Tất cả'];
     const { myWords } = useAppSelector(selectWords);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [page, setPage] = useState<number>(1);
-    const [indexTabActive, setIndexTabActive] = useState(2);
+    const [indexTabActive, setIndexTabActive] = useState(0);
     const [refreshing, setRefreshing] = React.useState(false);
 
     const navigation: any = useNavigation();

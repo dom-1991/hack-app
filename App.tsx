@@ -7,6 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import Tts from 'react-native-tts';
+import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 
 import { persistor, store } from '@stores';
 
@@ -14,15 +15,20 @@ Tts.setDefaultLanguage('ja-JP');
 
 const App = () => {
     return (
-        <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <SafeAreaProvider>
-                    <NavigationContainer>
-                        <AppNavigator />
-                    </NavigationContainer>
-                </SafeAreaProvider>
-            </PersistGate>
-        </Provider>
+        <TouchableWithoutFeedback
+            onPress={() => {
+                Keyboard.dismiss();
+            }}>
+            <Provider store={store}>
+                <PersistGate loading={null} persistor={persistor}>
+                    <SafeAreaProvider>
+                        <NavigationContainer>
+                            <AppNavigator />
+                        </NavigationContainer>
+                    </SafeAreaProvider>
+                </PersistGate>
+            </Provider>
+        </TouchableWithoutFeedback>
     );
 };
 

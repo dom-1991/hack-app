@@ -109,7 +109,6 @@ const AddWord = () => {
                     placeholder="Cách nhớ. 
                     Vd : ngồi bên CẦU THANG đánh CÁI ĐÀN cho crush nghe"
                     multiline
-                    blurOnSubmit
                     numberOfLines={5}
                 />
                 <Text style={styles.errorText}>{errors.note}</Text>

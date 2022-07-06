@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
 
     inputSmall: {
         // height: Spacing.height40,
-        borderWidth: Spacing.width1,
+        borderWidth: 0,
         borderRadius: Spacing.width4,
         borderColor: 'rgba(29, 161, 243, 0.64)',
         padding: Spacing.width4,

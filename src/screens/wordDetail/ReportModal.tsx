@@ -2,7 +2,13 @@ import { reportWords } from '@api';
 import { Spacing } from '@assets';
 import { CustomModal, Input } from '@components';
 import React, { memo, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+    Keyboard,
+    StyleSheet,
+    Text,
+    TouchableNativeFeedback,
+    View,
+} from 'react-native';
 
 interface ReportModalProps {
     onGoback: () => void;
@@ -62,38 +68,43 @@ const ReportModal = (props: ReportModalProps) => {
         <CustomModal
             modalVisible={modalVisible}
             onModalVisible={onModalVisible}
-            onClose={onSendReport}>
-            <View style={styles.container}>
-                {thank ? (
-                    <>
-                        <Text>Cám ơn bạn đã đóng góp!</Text>
-                        <Text>Chúng mình đã ghi lại cẩn thận rùi nha.</Text>
-                    </>
-                ) : (
-                    <>
-                        <Input
-                            label="Từ"
-                            value={reportContent.char}
-                            onChangeValue={value =>
-                                handleChangeValue(value, 'char')
-                            }
-                            placeholder="日"
-                        />
-                        <Input
-                            label="Nội dung vấn đề"
-                            value={reportContent.content}
-                            onChangeValue={value =>
-                                handleChangeValue(value, 'content')
-                            }
-                            placeholder="từ đang có vấn đề là...."
-                            multiline
-                            blurOnSubmit={true}
-                            numberOfLines={5}
-                        />
-                        <Text style={styles.error}>{error}</Text>
-                    </>
-                )}
-            </View>
+            onClose={onSendReport}
+            onCancel={onGoback}>
+            <TouchableNativeFeedback
+                onPress={() => {
+                    Keyboard.dismiss();
+                }}>
+                <View style={styles.container}>
+                    {thank ? (
+                        <>
+                            <Text>Cám ơn bạn đã đóng góp!</Text>
+                            <Text>Chúng mình đã ghi lại cẩn thận rùi nha.</Text>
+                        </>
+                    ) : (
+                        <>
+                            <Input
+                                label="Từ"
+                                value={reportContent.char}
+                                onChangeValue={value =>
+                                    handleChangeValue(value, 'char')
+                                }
+                                placeholder="日"
+                            />
+                            <Input
+                                label="Nội dung vấn đề"
+                                value={reportContent.content}
+                                onChangeValue={value =>
+                                    handleChangeValue(value, 'content')
+                                }
+                                placeholder="từ đang có vấn đề là...."
+                                multiline
+                                numberOfLines={5}
+                            />
+                            <Text style={styles.error}>{error}</Text>
+                        </>
+                    )}
+                </View>
+            </TouchableNativeFeedback>
         </CustomModal>
     );
 };

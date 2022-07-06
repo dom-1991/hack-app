@@ -32,3 +32,26 @@ export function limitWord(
     }
     return string;
 }
+
+export function limitChar(
+    string: string,
+    limit: number = 20,
+    suffix: string = '...',
+) {
+    if (string) {
+        const numberWords = string.split(' ');
+        let newString = numberWords[0];
+        for (let index = 1; index < numberWords.length; index++) {
+            const word = numberWords[index];
+            const wordToCheck = `${newString} ${word}`;
+            if (wordToCheck.length > limit) {
+                newString += suffix;
+                break;
+            } else {
+                newString = wordToCheck;
+            }
+        }
+        return newString;
+    }
+    return string;
+}

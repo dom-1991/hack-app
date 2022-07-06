@@ -104,7 +104,7 @@ export const KanjiScreen = () => {
                 <Input
                     value={value}
                     onChangeValue={handleChangeValue}
-                    placeholder="từ mới, vd: 階段,も,mo,...."
+                    placeholder="chữ hán, vd: 日"
                     error={!words.length ? 'Tiếc ghê không có từ này' : ''}
                 />
             </View>

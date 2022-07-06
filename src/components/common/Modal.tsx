@@ -33,6 +33,7 @@ export const CustomModal: React.FC<CustomModalProps> = props => {
                                 type="small"
                                 title="Cancel"
                                 onPress={onCancel}
+                                backgroundColor="#C4C4C4"
                             />
                         ) : (
                             <></>
