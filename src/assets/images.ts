@@ -20,4 +20,8 @@ export const Images = {
     next: require(`${path}next.png`),
     prev: require(`${path}prev.png`),
     note: require(`${path}note.png`),
+    menu: require(`${path}menu.png`),
+    menuLogo: require(`${path}menuLogo.png`),
+    up: require(`${path}up.png`),
+    down: require(`${path}down.png`),
 };
