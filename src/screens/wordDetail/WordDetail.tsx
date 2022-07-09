@@ -2,8 +2,14 @@
 import { Comment, CommonButton, Input } from '@components';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, View, TouchableOpacity, Image } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+    Text,
+    View,
+    TouchableOpacity,
+    Image,
+    KeyboardAvoidingView,
+    Platform,
+} from 'react-native';
 // import Tts from 'react-native-tts';
 import { CharsComment, CharsItem, CharsSearch } from '@types';
 import NoteModal from './NoteModal';
@@ -98,7 +104,9 @@ export const WordDetail = () => {
     };
 
     return (
-        <SafeAreaView style={styles.container} edges={['bottom']}>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.container}>
             <View style={styles.noteContain}>
                 <TouchableOpacity onPress={handlePrev}>
                     <Image source={Images.prev} style={styles.soundIcon} />
@@ -210,7 +218,8 @@ export const WordDetail = () => {
                 onGoback={handleReportModalVisible}
                 modalVisible={reportModalVisible}
                 onModalVisible={handleReportModalVisible}
+                word={word.word}
             />
-        </SafeAreaView>
+        </KeyboardAvoidingView>
     );
 };

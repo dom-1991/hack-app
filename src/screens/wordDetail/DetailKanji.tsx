@@ -1,8 +1,15 @@
-import { Comment, CommonButton, Input } from '@components';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+    Image,
+    KeyboardAvoidingView,
+    Platform,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
+
+import { Comment, CommonButton, Input } from '@components';
 import { CharsComment, CharsItem } from '@types';
 import NoteModal from './NoteModal';
 import ReportModal from './ReportModal';
@@ -77,9 +84,9 @@ export const KanjiDetail = () => {
     };
 
     return (
-        <SafeAreaView
-            style={styles.container}
-            edges={['left', 'right', 'bottom']}>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.container}>
             <View style={styles.noteContain}>
                 <TouchableOpacity onPress={handlePrev}>
                     <Image source={Images.prev} style={styles.soundIcon} />
@@ -173,7 +180,8 @@ export const KanjiDetail = () => {
                 onGoback={handleReportModalVisible}
                 modalVisible={reportModalVisible}
                 onModalVisible={handleReportModalVisible}
+                word={word.word}
             />
-        </SafeAreaView>
+        </KeyboardAvoidingView>
     );
 };

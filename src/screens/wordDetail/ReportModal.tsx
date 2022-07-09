@@ -14,16 +14,17 @@ interface ReportModalProps {
     onGoback: () => void;
     modalVisible: boolean;
     onModalVisible: () => void;
+    word?: string;
 }
 
 const ReportModal = (props: ReportModalProps) => {
-    const { onGoback, modalVisible, onModalVisible } = props;
+    const { onGoback, modalVisible, onModalVisible, word } = props;
     const [thank, setThank] = useState<boolean>(false);
     const [reportContent, setReportContent] = useState<{
         char: string;
         content: string;
     }>({
-        char: '',
+        char: word || '',
         content: '',
     });
     const [error, setError] = useState('');
@@ -51,7 +52,7 @@ const ReportModal = (props: ReportModalProps) => {
             if (reportContent.char && reportContent.content) {
                 try {
                     await reportWords(reportContent);
-                    setReportContent({ char: '', content: '' });
+                    setReportContent({ char: word || '', content: '' });
                 } catch {
                     setError('Có lỗi sảy ra');
                 }

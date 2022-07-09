@@ -37,6 +37,7 @@ export const KanjiScreen = () => {
             type: WordTypeEnum.Kanji,
         };
 
+        setIsError(false);
         try {
             const res = await getWords(params);
             if (res.data && res.data.length > 0) {

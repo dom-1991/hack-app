@@ -38,6 +38,7 @@ const Home = () => {
             type: WordTypeEnum.Word,
         };
 
+        setIsError(false);
         try {
             const res = await getWords(params);
             if (res.data && res.data.length > 0) {

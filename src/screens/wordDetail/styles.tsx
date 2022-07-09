@@ -68,6 +68,12 @@ export const styles = StyleSheet.create({
         color: 'rgba(0, 0, 0, 0.87)',
     },
 
+    noteMeaning: {
+        fontSize: FontSize.Font14,
+        marginVertical: Spacing.height32,
+        color: 'rgba(0, 0, 0, 0.87)',
+    },
+
     kanjiMeaning: {
         fontSize: FontSize.Font24,
         marginTop: Spacing.height32,
@@ -86,7 +92,7 @@ export const styles = StyleSheet.create({
     },
 
     noteMyNote: {
-        fontSize: FontSize.Font14,
+        fontSize: FontSize.Font16,
         color: 'rgba(0, 0, 0, 0.78)',
     },
 
