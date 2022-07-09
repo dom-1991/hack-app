@@ -1,6 +1,7 @@
 import { Spacing, FontSize, FontWithBold, Images } from '@assets';
 import React from 'react';
 import {
+    Alert,
     Image,
     SafeAreaView,
     ScrollView,
@@ -8,8 +9,19 @@ import {
     Text,
     View,
 } from 'react-native';
+import Clipboard from '@react-native-clipboard/clipboard';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export const Contact = () => {
+    const momo = '0583597438';
+    const mbBank = '0583597438';
+    const fb = 'https://www.facebook.com/hacknaotiengnhatn12345';
+    const email = 'tomuhedspi@gmail.com';
+    const copyToClipBoard = (text: string) => {
+        Clipboard.setString(text);
+        Alert.alert('Copy to clipboard!');
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scroll}>
@@ -18,7 +30,12 @@ export const Contact = () => {
                 </Text>
                 <View style={styles.momo}>
                     <Text style={styles.title}>Momo</Text>
-                    <Text style={styles.description}>0583597438</Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                            copyToClipBoard(momo);
+                        }}>
+                        <Text style={styles.description}>{momo}</Text>
+                    </TouchableOpacity>
                     <Text style={styles.bankAuthor}>Nguyễn Thị Thơm</Text>
 
                     <Image source={Images.momo} style={styles.momoQR} />
@@ -28,19 +45,33 @@ export const Contact = () => {
                     <Text style={styles.title}>
                         MB bank(Ngân Hàng Quân Đội):
                     </Text>
-                    <Text style={styles.description}>0583597438</Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                            copyToClipBoard(mbBank);
+                        }}>
+                        <Text style={styles.description}>{mbBank}</Text>
+                    </TouchableOpacity>
                     <Text style={styles.bankAuthor}>Nguyễn Thị Thơm</Text>
                     <Image source={Images.bank} style={styles.bankImage} />
                 </View>
                 <View style={styles.email}>
                     <Text style={styles.title}>Fanpage:</Text>
-                    <Text style={styles.description}>
-                        https://www.facebook.com/hacknaotiengnhatn12345
-                    </Text>
+
+                    <TouchableOpacity
+                        onPress={() => {
+                            copyToClipBoard(fb);
+                        }}>
+                        <Text style={styles.description}>{fb}</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.email}>
                     <Text style={styles.title}>Email:</Text>
-                    <Text style={styles.description}>tomuhedspi@gmail.com</Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                            copyToClipBoard(email);
+                        }}>
+                        <Text style={styles.description}>{email}</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
         </SafeAreaView>
