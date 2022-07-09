@@ -19,4 +19,5 @@ export const Images = {
     trash: require(`${path}trash.png`),
     next: require(`${path}next.png`),
     prev: require(`${path}prev.png`),
+    note: require(`${path}note.png`),
 };

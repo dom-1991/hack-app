@@ -93,10 +93,7 @@ const Home = () => {
         return (
             <Word
                 key={item?.id}
-                wordTitle={item?.word}
-                wordDescription={item?.read}
-                translateTitle={item?.meaning}
-                translateDescription={item?.note}
+                word={item}
                 onPress={() => navigation.navigate('WordDetail', { item })}
             />
         );

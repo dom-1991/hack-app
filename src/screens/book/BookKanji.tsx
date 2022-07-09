@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import {
-    FlatList,
-    Image,
-    RefreshControl,
-    StyleSheet,
-    View,
-} from 'react-native';
+import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { debounce } from 'lodash';
 
-import { Images, Spacing } from '@assets';
+import { Spacing } from '@assets';
 import { CommonButton, Input, Word } from '@components';
 import { CharsItem, CharsSearch } from '@types';
 import { getWords } from '@api';
@@ -92,10 +86,7 @@ export const BookKanji = () => {
         return (
             <Word
                 key={item?.id}
-                wordTitle={item?.word}
-                wordDescription={item?.read}
-                translateTitle={item?.meaning}
-                translateDescription={item?.note}
+                word={item}
                 onPress={() => navigation.navigate('KanjiDetail', { item })}
             />
         );

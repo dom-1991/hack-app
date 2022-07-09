@@ -1,25 +1,38 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { Spacing, FontSize } from '@assets';
+import { Spacing, FontSize, Images } from '@assets';
 import { limitChar } from '@utils';
+import {
+    noteMyWord,
+    selectWords,
+    useAppDispatch,
+    useAppSelector,
+} from '@stores';
+import { CharsItem, CharsMyItem } from '@types';
 
 interface WordProps {
-    wordTitle: string;
-    wordDescription: string;
-    translateTitle: string;
-    translateDescription: string;
     onPress?: () => void;
+    word: CharsItem;
 }
 
 export const Word = (props: WordProps) => {
-    const {
-        wordTitle,
-        wordDescription,
-        translateTitle,
-        translateDescription,
-        onPress,
-    } = props;
+    const { word, onPress } = props;
+
+    const dispatch = useAppDispatch();
+    const words = useAppSelector(selectWords);
+    const myWord = words?.myWords?.find(wordItem => wordItem?.id === word.id);
+
+    const handleNote = (e: any) => {
+        e.preventDefault();
+        const myWordParam: CharsMyItem = {
+            ...word,
+            myNote: '',
+            isLearn: false,
+        };
+        dispatch(noteMyWord(myWordParam));
+    };
+
     return (
         <TouchableOpacity
             style={styles.container}
@@ -27,21 +40,26 @@ export const Word = (props: WordProps) => {
             onPress={onPress}>
             <View style={styles.wordContainer}>
                 <View style={styles.word}>
-                    <Text style={styles.wordTitle}>{wordTitle}</Text>
-                    <Text style={styles.wordDescription}>
-                        {wordDescription}
-                    </Text>
+                    <Text style={styles.wordTitle}>{word.word}</Text>
+                    <Text style={styles.wordDescription}>{word.reading}</Text>
                 </View>
                 <View>
+                    {!myWord && (
+                        <TouchableOpacity onPress={handleNote}>
+                            <Image
+                                source={Images.note}
+                                style={styles.noteImage}
+                            />
+                        </TouchableOpacity>
+                    )}
+
                     <Text style={styles.translateTitle}>
-                        {limitChar(translateTitle, 15)}
+                        {limitChar(word.meaning, 15)}
                     </Text>
                 </View>
             </View>
 
-            <Text style={styles.translateDescription}>
-                {translateDescription}
-            </Text>
+            <Text style={styles.translateDescription}>{word.note}</Text>
         </TouchableOpacity>
     );
 };
@@ -58,6 +76,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        position: 'relative',
+    },
+    noteImage: {
+        position: 'absolute',
+        top: -15,
+        right: 0,
     },
 
     word: {

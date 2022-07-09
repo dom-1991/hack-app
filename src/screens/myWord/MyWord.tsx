@@ -22,7 +22,7 @@ const MyWord = () => {
     const [indexTabActive, setIndexTabActive] = useState(0);
     const [refreshing, setRefreshing] = React.useState(false);
 
-    const navigation = useNavigation();
+    const navigation: any = useNavigation();
 
     useEffect(() => {
         // dispatch(fetchWordsAsync());
@@ -47,10 +47,7 @@ const MyWord = () => {
             return (
                 <Word
                     key={item?.id}
-                    wordTitle={item?.word}
-                    wordDescription={item?.read}
-                    translateTitle={item?.meaning}
-                    translateDescription={item?.note}
+                    word={item}
                     onPress={() =>
                         navigation.navigate('MyWordDetail', { item })
                     }
