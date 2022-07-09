@@ -22,7 +22,7 @@ const MyWord = () => {
     const [indexTabActive, setIndexTabActive] = useState(0);
     const [refreshing, setRefreshing] = React.useState(false);
 
-    const navigation: any = useNavigation();
+    const navigation = useNavigation();
 
     useEffect(() => {
         // dispatch(fetchWordsAsync());

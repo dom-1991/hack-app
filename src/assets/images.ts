@@ -17,4 +17,6 @@ export const Images = {
     bank: require(`${path}bank.png`),
     edit: require(`${path}edit.png`),
     trash: require(`${path}trash.png`),
+    next: require(`${path}next.png`),
+    prev: require(`${path}prev.png`),
 };

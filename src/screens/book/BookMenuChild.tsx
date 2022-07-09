@@ -13,7 +13,7 @@ import { Spacing, FontSize, FontWithBold } from '@assets';
 
 export const BookMenuChildScreen = () => {
     const route: any = useRoute();
-    const navigation: any = useNavigation();
+    const navigation = useNavigation();
 
     let { menuList }: { menuList: BookMenu[] } = route.params || {};
 

@@ -24,7 +24,7 @@ const Home = () => {
     const [words, setWords] = useState<CharsItem[]>([]);
     const [refreshing, setRefreshing] = React.useState(false);
 
-    const navigation: any = useNavigation();
+    const navigation = useNavigation();
 
     useEffect(() => {
         fetchWords(1, '');

@@ -25,7 +25,7 @@ const validationSchema = yup.object().shape({
 
 const AddWord = () => {
     const [modalVisible, setModalVisible] = useState(false);
-    const navigation: any = useNavigation();
+    const navigation = useNavigation();
 
     const handleModalVisible = () => {
         setModalVisible(!modalVisible);

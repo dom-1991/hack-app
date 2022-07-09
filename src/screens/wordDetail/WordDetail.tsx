@@ -1,37 +1,46 @@
 // import { Images } from '@assets';
 import { Comment, CommonButton, Input } from '@components';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 // import Tts from 'react-native-tts';
-import { CharsComment, CharsItem } from '@types';
+import { CharsComment, CharsItem, CharsSearch } from '@types';
 import NoteModal from './NoteModal';
 import ReportModal from './ReportModal';
 import { styles } from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
-import { commentPost, getWord } from '@api';
+import { commentPost, getWord, getWords } from '@api';
 import { selectWords, useAppSelector } from '@stores';
+import { Images } from '@assets';
+import { WordTypeEnum } from '@enum';
 
 export const WordDetail = () => {
     const route: any = useRoute();
     let { item }: { item: CharsItem } = route.params || {};
     const [word, setWord] = useState(item);
+    const [next, setNext] = useState<number>(-1);
+    const [prev, setPrev] = useState<number>(-1);
+    const navigation: any = useNavigation();
 
     const words = useAppSelector(selectWords);
-    const myWord = words?.myWords?.find(word => word?.id === item?.id);
+    const myWord = words?.myWords?.find(wordItem => wordItem?.id === item?.id);
 
-    const fetchWord = useCallback(async () => {
+    const fetchWord = useCallback(async (id: number) => {
         try {
-            const res = await getWord(item.id);
+            const res = await getWord(id);
             setWord(res.data);
+            //@ts-ignore
+            setNext(res?.next);
+            //@ts-ignore
+            setPrev(res?.prev);
         } catch {
             //
         }
-    }, [item.id]);
+    }, []);
     useEffect(() => {
-        fetchWord();
-    }, [fetchWord]);
+        fetchWord(item.id);
+    }, [item.id, fetchWord]);
     // const onTextToSpeech = (text: string) => {
     //     Tts.speak(text);
     // };
@@ -53,12 +62,12 @@ export const WordDetail = () => {
         if (content) {
             try {
                 const params: CharsComment = {
-                    id: item.id,
+                    id: word.id,
                     author_name: authorName || 'Người Dùng',
                     content,
                 };
                 await commentPost(params);
-                fetchWord();
+                fetchWord(word.id);
                 setContent('');
             } catch {
                 //
@@ -66,22 +75,57 @@ export const WordDetail = () => {
         }
     };
 
+    const handleNext = () => {
+        fetchWord(next);
+    };
+
+    const handlePrev = () => {
+        fetchWord(prev);
+    };
+    const handleSearchKanji = async (search_kanji: string) => {
+        const params: CharsSearch = {
+            page: 1,
+            search_kanji,
+            type: WordTypeEnum.Kanji,
+        };
+        try {
+            const res = await getWords(params);
+            if (res.data && res.data.length > 0) {
+                const kanji = res.data[0];
+                navigation.navigate('KanjiDetail', { item: kanji });
+            }
+        } catch {}
+    };
+
     return (
-        <SafeAreaView
-            style={styles.container}
-            edges={['left', 'right', 'bottom']}>
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                style={styles.inner}>
-                <View style={styles.top}>
-                    <View>
-                        <Text style={styles.word}>{item?.word}</Text>
-                    </View>
-                    <View>
-                        {/* <TouchableOpacity
+        <SafeAreaView style={styles.container} edges={['bottom']}>
+            <View style={styles.noteContain}>
+                <TouchableOpacity onPress={handlePrev}>
+                    <Image source={Images.prev} style={styles.soundIcon} />
+                </TouchableOpacity>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    style={styles.inner}>
+                    <View style={styles.top}>
+                        <View style={styles.wordContainer}>
+                            {word?.word?.split('').map(wordSplit => {
+                                return (
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            handleSearchKanji(wordSplit);
+                                        }}>
+                                        <Text style={styles.word}>
+                                            {wordSplit}
+                                        </Text>
+                                    </TouchableOpacity>
+                                );
+                            })}
+                        </View>
+                        <View>
+                            {/* <TouchableOpacity
                             activeOpacity={0.8}
                             onPress={() => {
-                                onTextToSpeech(item?.read);
+                                onTextToSpeech(word?.read);
                             }}>
                             <Image
                                 source={Images.sound}
@@ -89,68 +133,73 @@ export const WordDetail = () => {
                             />
                         </TouchableOpacity> */}
 
-                        <Text style={styles.read}>{item?.read}</Text>
-                    </View>
-                </View>
-
-                <Text style={styles.meaning}>{item?.meaning}</Text>
-                <Text style={styles.note}>{item?.note}</Text>
-
-                {myWord ? (
-                    <></>
-                ) : (
-                    <View style={styles.noteButton}>
-                        <CommonButton
-                            title="Thêm vào Note"
-                            onPress={handleNoteModalVisible}
-                        />
-                    </View>
-                )}
-
-                <View style={styles.comment}>
-                    <Text style={styles.commentHeading}>Các góp ý</Text>
-                    <ScrollView style={styles.commentContainer}>
-                        {word.comment.map(comment => (
-                            <Comment comment={comment} key={comment.id} />
-                        ))}
-                    </ScrollView>
-                </View>
-                <View style={styles.addComment}>
-                    <Input
-                        value={content}
-                        onChangeValue={value => {
-                            setContent(value);
-                        }}
-                        placeholder="Thêm góp ý của bạn..."
-                    />
-                    <View style={styles.addCommentAction}>
-                        <Input
-                            size="small"
-                            placeholder="Tên của bạn"
-                            value={authorName}
-                            onChangeValue={value => {
-                                setAuthorName(value);
-                            }}
-                        />
-                        <View style={styles.sendCommentButton}>
-                            <CommonButton
-                                type="small"
-                                title="Gửi"
-                                onPress={handleComment}
-                            />
+                            <Text style={styles.read}>{word?.read}</Text>
                         </View>
                     </View>
-                </View>
 
-                <TouchableOpacity onPress={handleReportModalVisible}>
-                    <Text style={styles.reportButton}>
-                        Báo cáo từ này có vấn đề
-                    </Text>
+                    <Text style={styles.meaning}>{word?.meaning}</Text>
+                    <Text style={styles.note}>{word?.note}</Text>
+
+                    {myWord ? (
+                        <></>
+                    ) : (
+                        <View style={styles.noteButton}>
+                            <CommonButton
+                                title="Thêm vào Note"
+                                onPress={handleNoteModalVisible}
+                            />
+                        </View>
+                    )}
+
+                    <View style={styles.comment}>
+                        <Text style={styles.commentHeading}>Các góp ý</Text>
+                        <ScrollView style={styles.commentContainer}>
+                            {word.comment.map(comment => (
+                                <Comment comment={comment} key={comment.id} />
+                            ))}
+                        </ScrollView>
+                    </View>
+                    <View style={styles.addComment}>
+                        <Input
+                            value={content}
+                            onChangeValue={value => {
+                                setContent(value);
+                            }}
+                            placeholder="Thêm góp ý của bạn..."
+                        />
+                        <View style={styles.addCommentAction}>
+                            <Input
+                                size="small"
+                                placeholder="Tên của bạn"
+                                value={authorName}
+                                onChangeValue={value => {
+                                    setAuthorName(value);
+                                }}
+                            />
+                            <View style={styles.sendCommentButton}>
+                                <CommonButton
+                                    type="small"
+                                    title="Gửi"
+                                    onPress={handleComment}
+                                />
+                            </View>
+                        </View>
+                    </View>
+
+                    <TouchableOpacity onPress={handleReportModalVisible}>
+                        <Text style={styles.reportButton}>
+                            Báo cáo từ này có vấn đề
+                        </Text>
+                    </TouchableOpacity>
+                </ScrollView>
+
+                <TouchableOpacity onPress={handleNext}>
+                    <Image source={Images.next} style={styles.soundIcon} />
                 </TouchableOpacity>
-            </ScrollView>
-            {item && (
+            </View>
+            {word && (
                 <NoteModal
-                    word={item}
+                    word={word}
                     onGoback={handleNoteModalVisible}
                     modalVisible={noteModalVisible}
                     onModalVisible={handleNoteModalVisible}

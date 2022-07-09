@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { debounce } from 'lodash';
 
-import { Input, CommonButton, Word } from '@components';
+import { Input, Word } from '@components';
 import { Spacing } from '@assets';
 import { getWords } from '@api';
 import { CharsItem, CharsSearch } from '@types';
@@ -24,6 +24,7 @@ const BookList = () => {
 
     useEffect(() => {
         fetchWords(1, '');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const fetchWords = async (movePage: number, search: string) => {
@@ -64,11 +65,9 @@ const BookList = () => {
         handleChangeWord(text);
     };
 
-    // console.log(words);
-
-    const onNavigateAddWordScreen = () => {
-        navigation.navigate('AddWord');
-    };
+    // const onNavigateAddWordScreen = () => {
+    //     navigation.navigate('AddWord');
+    // };
 
     const onLoadMore = () => {
         if (!isError) {

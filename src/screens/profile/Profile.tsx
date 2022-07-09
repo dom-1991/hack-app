@@ -12,7 +12,7 @@ import {
 
 const menuList = [
     {
-        title: 'Từ của tôi',
+        title: 'Note',
         screen: 'MyWord',
     },
     {
@@ -20,8 +20,12 @@ const menuList = [
         screen: 'BookMenu',
     },
     {
-        title: 'Hán tự',
+        title: 'Hán tự Bộ thủ',
         screen: 'Japan',
+    },
+    {
+        title: 'Đóng góp từ',
+        screen: 'AddWord',
     },
     {
         title: 'Tặng trà sữa',
@@ -97,7 +101,7 @@ const bookMenu: BookMenu[] = [
 console.log(bookMenu);
 
 export const Profile = () => {
-    const navigation: any = useNavigation();
+    const navigation = useNavigation();
 
     return (
         <SafeAreaView style={styles.container}>

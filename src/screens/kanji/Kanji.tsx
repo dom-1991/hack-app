@@ -23,7 +23,7 @@ export const KanjiScreen = () => {
     const [words, setWords] = useState<CharsItem[]>([]);
     const [refreshing, setRefreshing] = useState(false);
 
-    const navigation: any = useNavigation();
+    const navigation = useNavigation();
 
     useEffect(() => {
         fetchWords(1, '');

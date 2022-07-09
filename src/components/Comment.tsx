@@ -55,51 +55,55 @@ export const Comment = (props: Props) => {
     };
 
     return (
-        <View style={styles.commentItem}>
+        <View>
             <View style={styles.content}>
                 <Text style={styles.commentText}>{comment.content}</Text>
-                <View style={styles.reaction}>
-                    {typeof comment.like !== 'undefined' &&
-                    (isLike || !isUnlike) ? (
-                        <View style={styles.reactionItem}>
-                            <Text style={styles.reactionCount}>
-                                {comment.like + likeCount}
-                            </Text>
-                            <TouchableOpacity onPress={handleLike}>
-                                <Image
-                                    source={
-                                        isLike ? Images.likeActive : Images.like
-                                    }
-                                    style={styles.reactionImage}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    ) : (
-                        <></>
-                    )}
-                    {typeof comment.unlike !== 'undefined' &&
-                    (isUnlike || !isLike) ? (
-                        <View style={styles.reactionItem}>
-                            <Text style={styles.reactionCount}>
-                                {comment.unlike + unlikeCount}
-                            </Text>
-                            <TouchableOpacity onPress={handleUnlike}>
-                                <Image
-                                    source={
-                                        isUnlike
-                                            ? Images.unlikeActive
-                                            : Images.unlike
-                                    }
-                                    style={styles.reactionImage}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    ) : (
-                        <></>
-                    )}
+                <View style={styles.commentItem}>
+                    <View style={styles.reaction}>
+                        {typeof comment.like !== 'undefined' &&
+                        (isLike || !isUnlike) ? (
+                            <View style={styles.reactionItem}>
+                                <Text style={styles.reactionCount}>
+                                    {comment.like + likeCount}
+                                </Text>
+                                <TouchableOpacity onPress={handleLike}>
+                                    <Image
+                                        source={
+                                            isLike
+                                                ? Images.likeActive
+                                                : Images.like
+                                        }
+                                        style={styles.reactionImage}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        ) : (
+                            <></>
+                        )}
+                        {typeof comment.unlike !== 'undefined' &&
+                        (isUnlike || !isLike) ? (
+                            <View style={styles.reactionItem}>
+                                <Text style={styles.reactionCount}>
+                                    {comment.unlike + unlikeCount}
+                                </Text>
+                                <TouchableOpacity onPress={handleUnlike}>
+                                    <Image
+                                        source={
+                                            isUnlike
+                                                ? Images.unlikeActive
+                                                : Images.unlike
+                                        }
+                                        style={styles.reactionImage}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        ) : (
+                            <></>
+                        )}
+                    </View>
+                    <Text style={styles.author}>{comment.author_name}</Text>
                 </View>
             </View>
-            <Text style={styles.author}>{comment.author_name}</Text>
         </View>
     );
 };

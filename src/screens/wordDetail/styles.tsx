@@ -7,8 +7,19 @@ export const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingTop: Spacing.height20,
         justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+
+    myWordContainer: {
+        flex: 1,
+        backgroundColor: 'white',
+        paddingTop: Spacing.height20,
+        justifyContent: 'space-between',
         paddingHorizontal: Spacing.height20,
         alignItems: 'center',
+    },
+    wordContainer: {
+        flexDirection: 'row',
     },
 
     inner: {
@@ -20,6 +31,12 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
+    },
+
+    topIcon: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-end',
     },
     kanjiTop: {
         alignItems: 'center',
@@ -46,8 +63,8 @@ export const styles = StyleSheet.create({
     },
 
     meaning: {
-        fontSize: FontSize.Font24,
-        marginVertical: Spacing.height16,
+        fontSize: FontSize.Font16,
+        marginVertical: Spacing.height32,
         color: 'rgba(0, 0, 0, 0.87)',
     },
 
@@ -59,10 +76,13 @@ export const styles = StyleSheet.create({
     },
 
     note: {
-        fontSize: FontSize.Font24,
-        marginTop: Spacing.height20,
+        fontSize: FontSize.Font20,
         color: 'rgba(0, 0, 0, 0.87)',
         marginBottom: Spacing.height40,
+    },
+    noteContain: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
     },
 
     noteMyNote: {
@@ -93,16 +113,16 @@ export const styles = StyleSheet.create({
     },
 
     soundIcon: {
-        width: Spacing.width24,
-        height: Spacing.height21,
-        marginBottom: Spacing.height10,
+        width: Spacing.width12,
+        height: Spacing.height15,
+        marginTop: Spacing.height100,
+        marginHorizontal: Spacing.height5,
     },
 
     editIcon: {
         width: Spacing.width24,
         height: Spacing.height21,
         marginBottom: Spacing.height10,
-        marginLeft: Spacing.height15,
     },
     trashIcon: {
         width: Spacing.width16,
