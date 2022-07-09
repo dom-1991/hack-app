@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "hackBkTiengNhatApp.app"
-               BlueprintName = "hackBkTiengNhatApp"
-               ReferencedContainer = "container:hackBkTiengNhatApp.xcodeproj">
+               BuildableName = "Hacknaobk.app"
+               BlueprintName = "Hacknaobk"
+               ReferencedContainer = "container:Hacknaobk.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "hackBkTiengNhatAppTests.xctest"
-               BlueprintName = "hackBkTiengNhatAppTests"
-               ReferencedContainer = "container:hackBkTiengNhatApp.xcodeproj">
+               BuildableName = "HacknaobkTests.xctest"
+               BlueprintName = "HacknaobkTests"
+               ReferencedContainer = "container:Hacknaobk.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "hackBkTiengNhatApp.app"
-            BlueprintName = "hackBkTiengNhatApp"
-            ReferencedContainer = "container:hackBkTiengNhatApp.xcodeproj">
+            BuildableName = "Hacknaobk.app"
+            BlueprintName = "Hacknaobk"
+            ReferencedContainer = "container:Hacknaobk.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "hackBkTiengNhatApp.app"
-            BlueprintName = "hackBkTiengNhatApp"
-            ReferencedContainer = "container:hackBkTiengNhatApp.xcodeproj">
+            BuildableName = "Hacknaobk.app"
+            BlueprintName = "Hacknaobk"
+            ReferencedContainer = "container:Hacknaobk.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
