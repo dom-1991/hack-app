@@ -23,10 +23,11 @@ export const KanjiScreen = () => {
     const [words, setWords] = useState<CharsItem[]>([]);
     const [refreshing, setRefreshing] = useState(false);
 
-    const navigation = useNavigation();
+    const navigation: any = useNavigation();
 
     useEffect(() => {
         fetchWords(1, '');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const fetchWords = async (movePage: number, search_kanji: string) => {
@@ -67,7 +68,7 @@ export const KanjiScreen = () => {
     };
 
     const onNavigateAddWordScreen = () => {
-        navigation.navigate('AddWord');
+        navigation.navigate('AddWord', { word: value });
     };
 
     const onLoadMore = () => {

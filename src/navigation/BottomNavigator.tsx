@@ -64,6 +64,7 @@ export const BottomTabNavigator = () => {
                     key={tab.name}
                     name={tab.name}
                     component={tab.screen}
+                    initialParams={{ book: '' }}
                     options={{
                         headerShown: false,
                         tabBarIcon: ({ focused }) => (

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as yup from 'yup';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { Input, CommonButton, CustomModal } from '@components';
 import { Spacing, FontSize } from '@assets';
@@ -26,6 +26,14 @@ const validationSchema = yup.object().shape({
 const AddWord = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation();
+    const route: any = useRoute();
+
+    let { word }: { word: string } = route.params || {};
+
+    useEffect(() => {
+        setFieldValue('word', word);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [word]);
 
     const handleModalVisible = () => {
         setModalVisible(!modalVisible);
@@ -60,7 +68,7 @@ const AddWord = () => {
     };
 
     const handleOk = () => {
-        setValues(initialValues);
+        setValues({ ...initialValues, word });
         setErrors({});
         setModalVisible(false);
         navigation.goBack();

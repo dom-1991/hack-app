@@ -120,13 +120,13 @@ export const styles = StyleSheet.create({
     },
 
     editIcon: {
-        width: Spacing.width24,
-        height: Spacing.height21,
+        width: Spacing.width20,
+        height: Spacing.height17,
         marginBottom: Spacing.height10,
     },
     trashIcon: {
-        width: Spacing.width16,
-        height: Spacing.height21,
+        width: Spacing.width13,
+        height: Spacing.height17,
         marginBottom: Spacing.height10,
         marginLeft: Spacing.height15,
     },

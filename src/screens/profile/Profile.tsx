@@ -21,7 +21,7 @@ const menuList = [
     },
     {
         title: 'Hán tự Bộ thủ',
-        screen: 'Japan',
+        screen: 'BookKanji',
     },
     {
         title: 'Đóng góp từ',
@@ -98,10 +98,9 @@ const bookMenu: BookMenu[] = [
     { title: 'Mimikara N2', book: 'MIMI_N2' },
     { title: 'Mimikara N1', book: 'MIMI_N1' },
 ];
-console.log(bookMenu);
 
 export const Profile = () => {
-    const navigation = useNavigation();
+    const navigation: any = useNavigation();
 
     return (
         <SafeAreaView style={styles.container}>
@@ -114,6 +113,10 @@ export const Profile = () => {
                                 if (menuItem.screen === 'BookMenu') {
                                     navigation.navigate(menuItem.screen, {
                                         menuList: bookMenu,
+                                    });
+                                } else if (menuItem.screen === 'BookKanji') {
+                                    navigation.navigate(menuItem.screen, {
+                                        book: 'KANJI_HAND',
                                     });
                                 } else {
                                     navigation.navigate(menuItem.screen);

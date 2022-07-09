@@ -12,6 +12,7 @@ import {
     BookMenuScreen,
     BookMenuChildScreen,
     BookList,
+    BookKanji,
 } from '@screens';
 
 const Stack = createStackNavigator();
@@ -25,7 +26,10 @@ function AppNavigator() {
                 component={BottomTabNavigator}
             />
             <Stack.Screen
-                options={{ title: 'Thêm từ mới' }}
+                options={{
+                    title: 'Thêm từ mới',
+                    headerLeftLabelVisible: false,
+                }}
                 name="AddWord"
                 component={AddWord}
             />
@@ -45,24 +49,30 @@ function AppNavigator() {
                 component={KanjiDetail}
             />
             <Stack.Screen
-                options={{ title: 'Note' }}
+                options={{ title: 'Note', headerLeftLabelVisible: false }}
                 name="MyWord"
                 component={MyWord}
             />
             <Stack.Screen
-                options={{ title: '' }}
+                options={{ title: '', headerLeftLabelVisible: false }}
                 name="BookMenu"
                 component={BookMenuScreen}
             />
             <Stack.Screen
-                options={{ title: '' }}
+                options={{ title: '', headerLeftLabelVisible: false }}
                 name="BookMenuChild"
                 component={BookMenuChildScreen}
             />
             <Stack.Screen
-                options={{ title: '' }}
+                options={{ title: '', headerLeftLabelVisible: false }}
                 name="BookList"
                 component={BookList}
+            />
+
+            <Stack.Screen
+                options={{ title: '', headerLeftLabelVisible: false }}
+                name="BookKanji"
+                component={BookKanji}
             />
             <Stack.Screen
                 options={{ title: '' }}

@@ -1,37 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import {
+    FlatList,
+    Image,
+    RefreshControl,
+    StyleSheet,
+    View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { debounce } from 'lodash';
 
-import { Input, Word } from '@components';
-import { Spacing } from '@assets';
-import { getWords } from '@api';
+import { Images, Spacing } from '@assets';
+import { CommonButton, Input, Word } from '@components';
 import { CharsItem, CharsSearch } from '@types';
+import { getWords } from '@api';
 import { WordTypeEnum } from '@enum';
 
-const BookList = () => {
-    // const words = useAppSelector(selectWords);
+export const BookKanji = () => {
     const [page, setPage] = useState(1);
     const [value, setValue] = useState<string>('');
     const [isError, setIsError] = useState<boolean>(false);
     const [words, setWords] = useState<CharsItem[]>([]);
-    const [refreshing, setRefreshing] = React.useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     const navigation: any = useNavigation();
     const route: any = useRoute();
-    const { book }: { book: string } = route.params || '';
+    let { book }: { book: string } = route.params || {};
 
     useEffect(() => {
         fetchWords(1, '');
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [book]);
 
-    const fetchWords = async (movePage: number, search: string) => {
+    const fetchWords = async (movePage: number, search_kanji: string) => {
         const params: CharsSearch = {
             page: movePage,
-            search,
-            type: WordTypeEnum.Word,
+            search_kanji,
+            type: WordTypeEnum.Kanji,
             book,
         };
 
@@ -65,9 +70,9 @@ const BookList = () => {
         handleChangeWord(text);
     };
 
-    // const onNavigateAddWordScreen = () => {
-    //     navigation.navigate('AddWord');
-    // };
+    const onNavigateAddWordScreen = () => {
+        navigation.navigate('AddWord', { word: value });
+    };
 
     const onLoadMore = () => {
         if (!isError) {
@@ -91,7 +96,7 @@ const BookList = () => {
                 wordDescription={item?.read}
                 translateTitle={item?.meaning}
                 translateDescription={item?.note}
-                onPress={() => navigation.navigate('WordDetail', { item })}
+                onPress={() => navigation.navigate('KanjiDetail', { item })}
             />
         );
     };
@@ -102,11 +107,10 @@ const BookList = () => {
                 <Input
                     value={value}
                     onChangeValue={handleChangeValue}
-                    placeholder="từ mới, vd: 階段,も,mo,...."
+                    placeholder="chữ hán, vd: 日"
                     error={!words.length ? 'Tiếc ghê không có từ này' : ''}
                 />
             </View>
-
             {words.length ? (
                 <FlatList
                     data={words as []}
@@ -123,10 +127,10 @@ const BookList = () => {
                 />
             ) : (
                 <View style={styles.notFoundWord}>
-                    {/* <CommonButton
+                    <CommonButton
                         title="Thêm từ này"
                         onPress={onNavigateAddWordScreen}
-                    /> */}
+                    />
                 </View>
             )}
         </SafeAreaView>
@@ -135,8 +139,17 @@ const BookList = () => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: -35,
+        flex: 1,
         backgroundColor: '#FFFFFF',
+        paddingTop: -35,
+    },
+
+    logo: {
+        width: Spacing.width231,
+        height: Spacing.height18,
+        marginTop: Spacing.height12,
+        marginBottom: Spacing.height20,
+        marginLeft: Spacing.width16,
     },
 
     input: {
@@ -154,5 +167,3 @@ const styles = StyleSheet.create({
         paddingHorizontal: Spacing.height20,
     },
 });
-
-export { BookList };
