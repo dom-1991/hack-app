@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+    Keyboard,
+    StyleSheet,
+    Text,
+    TouchableWithoutFeedback,
+    View,
+} from 'react-native';
 import * as yup from 'yup';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -75,7 +81,10 @@ const AddWord = () => {
     };
 
     return (
-        <>
+        <TouchableWithoutFeedback
+            onPress={() => {
+                Keyboard.dismiss();
+            }}>
             <View style={styles.container}>
                 <Input
                     label="Từ"
@@ -94,7 +103,7 @@ const AddWord = () => {
                     onChangeValue={value => {
                         handleChangeValue('reading', value);
                     }}
-                    placeholder="từ mới, vd: 階段,も,mo,...."
+                    placeholder="ひらがな"
                 />
                 <Text style={styles.errorText}>{errors.reading}</Text>
                 <Input
@@ -127,17 +136,20 @@ const AddWord = () => {
                         onPress={handleSubmit}
                     />
                 </View>
+
+                <CustomModal
+                    modalVisible={modalVisible}
+                    onModalVisible={handleModalVisible}
+                    onClose={handleOk}>
+                    <Text style={styles.modalText}>
+                        Cám ơn bạn đã đóng góp!
+                    </Text>
+                    <Text style={styles.modalText}>
+                        Chúng mình đã ghi lại cẩn thận rùi nha.
+                    </Text>
+                </CustomModal>
             </View>
-            <CustomModal
-                modalVisible={modalVisible}
-                onModalVisible={handleModalVisible}
-                onClose={handleOk}>
-                <Text style={styles.modalText}>Cám ơn bạn đã đóng góp!</Text>
-                <Text style={styles.modalText}>
-                    Chúng mình đã ghi lại cẩn thận rùi nha.
-                </Text>
-            </CustomModal>
-        </>
+        </TouchableWithoutFeedback>
     );
 };
 

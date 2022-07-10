@@ -1,7 +1,7 @@
 import { reportWords } from '@api';
 import { Spacing } from '@assets';
 import { CustomModal, Input } from '@components';
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import {
     Keyboard,
     StyleSheet,
@@ -28,6 +28,10 @@ const ReportModal = (props: ReportModalProps) => {
         content: '',
     });
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        setReportContent({ char: word || '', content: '' });
+    }, [word]);
 
     const handleChangeValue = (value: string, type: string) => {
         let reportContentUpdated = { ...reportContent };

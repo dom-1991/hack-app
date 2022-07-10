@@ -134,11 +134,17 @@ export const Profile = () => {
                         {menuItem.screen === 'BookMenu' && bookMenuShow && (
                             <View style={styles.menuBook}>
                                 {bookMenu.map(bookItem => (
-                                    <Text
-                                        style={styles.menuBookText}
-                                        key={bookItem.book}>
-                                        {bookItem.title}
-                                    </Text>
+                                    <TouchableOpacity
+                                        key={bookItem.book}
+                                        onPress={() => {
+                                            navigation.navigate('BookList', {
+                                                book: bookItem.book,
+                                            });
+                                        }}>
+                                        <Text style={styles.menuBookText}>
+                                            {bookItem.title}
+                                        </Text>
+                                    </TouchableOpacity>
                                 ))}
                             </View>
                         )}

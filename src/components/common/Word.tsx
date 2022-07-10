@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     },
     noteImage: {
         position: 'absolute',
-        top: -15,
+        top: -13,
         right: 0,
     },
 
