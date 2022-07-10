@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import {
+    ActivityIndicator,
+    FlatList,
+    RefreshControl,
+    StyleSheet,
+    View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { debounce } from 'lodash';
@@ -17,6 +23,7 @@ const BookList = () => {
     const [isError, setIsError] = useState<boolean>(false);
     const [words, setWords] = useState<CharsItem[]>([]);
     const [refreshing, setRefreshing] = React.useState(false);
+    const [loading, setLoading] = useState(true);
 
     const navigation: any = useNavigation();
     const route: any = useRoute();
@@ -51,12 +58,15 @@ const BookList = () => {
             }
         } catch {
             setIsError(true);
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleChangeWord = debounce((keyword: string) => {
         fetchWords(1, keyword);
         setPage(1);
+        setLoading(true);
     }, 500);
 
     const handleChangeValue = (text: string) => {
@@ -104,7 +114,11 @@ const BookList = () => {
                 />
             </View>
 
-            {words.length ? (
+            {loading ? (
+                <View style={styles.loading}>
+                    <ActivityIndicator size="large" color="#1DA1F38F" />
+                </View>
+            ) : words.length ? (
                 <FlatList
                     data={words as []}
                     onEndReached={onLoadMore}
@@ -134,6 +148,10 @@ const styles = StyleSheet.create({
     container: {
         paddingTop: -35,
         backgroundColor: '#FFFFFF',
+    },
+    loading: {
+        flex: 1,
+        justifyContent: 'center',
     },
 
     input: {

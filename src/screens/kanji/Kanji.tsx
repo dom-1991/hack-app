@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+    ActivityIndicator,
     FlatList,
     Image,
     RefreshControl,
@@ -22,6 +23,7 @@ export const KanjiScreen = () => {
     const [isError, setIsError] = useState<boolean>(false);
     const [words, setWords] = useState<CharsItem[]>([]);
     const [refreshing, setRefreshing] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const navigation: any = useNavigation();
 
@@ -54,12 +56,15 @@ export const KanjiScreen = () => {
             }
         } catch {
             setIsError(true);
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleChangeWord = debounce((keyword: string) => {
         fetchWords(1, keyword);
         setPage(1);
+        setLoading(true);
     }, 500);
 
     const handleChangeValue = (text: string) => {
@@ -107,7 +112,11 @@ export const KanjiScreen = () => {
                     error={!words.length ? 'Tiếc ghê không có từ này' : ''}
                 />
             </View>
-            {words.length ? (
+            {loading ? (
+                <View style={styles.loading}>
+                    <ActivityIndicator size="large" color="#1DA1F38F" />
+                </View>
+            ) : words.length ? (
                 <FlatList
                     data={words as []}
                     onEndReached={onLoadMore}
@@ -137,6 +146,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#FFFFFF',
+    },
+
+    loading: {
+        flex: 1,
+        justifyContent: 'center',
     },
 
     logo: {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+    ActivityIndicator,
     FlatList,
     Image,
     RefreshControl,
@@ -23,6 +24,7 @@ const Home = () => {
     const [isError, setIsError] = useState<boolean>(false);
     const [words, setWords] = useState<CharsItem[]>([]);
     const [refreshing, setRefreshing] = React.useState(false);
+    const [loading, setLoading] = useState(true);
 
     const navigation: any = useNavigation();
 
@@ -37,7 +39,6 @@ const Home = () => {
             search,
             type: WordTypeEnum.Word,
         };
-
         setIsError(false);
         try {
             const res = await getWords(params);
@@ -55,12 +56,15 @@ const Home = () => {
             }
         } catch {
             setIsError(true);
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleChangeWord = debounce((keyword: string) => {
         fetchWords(1, keyword);
         setPage(1);
+        setLoading(true);
     }, 500);
 
     const handleChangeValue = (text: string) => {
@@ -110,8 +114,11 @@ const Home = () => {
                     error={!words.length ? 'Tiếc ghê không có từ này' : ''}
                 />
             </View>
-
-            {words.length ? (
+            {loading ? (
+                <View style={styles.loading}>
+                    <ActivityIndicator size="large" color="#1DA1F38F" />
+                </View>
+            ) : words.length ? (
                 <FlatList
                     data={words as []}
                     onEndReached={onLoadMore}
@@ -141,6 +148,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#FFFFFF',
+    },
+
+    loading: {
+        flex: 1,
+        justifyContent: 'center',
     },
 
     logo: {
