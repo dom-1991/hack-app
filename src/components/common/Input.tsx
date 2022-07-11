@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     },
 
     label: {
-        fontSize: FontSize.Font18,
+        fontSize: FontSize.Font14,
         marginBottom: Spacing.height10,
     },
 

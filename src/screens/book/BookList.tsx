@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     ActivityIndicator,
     FlatList,
@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { debounce } from 'lodash';
+import debounce from 'lodash.debounce';
 
 import { Input, Word } from '@components';
 import { Spacing } from '@assets';
@@ -63,11 +63,14 @@ const BookList = () => {
         }
     };
 
-    const handleChangeWord = debounce((keyword: string) => {
+    const changeWord = (keyword: string) => {
         fetchWords(1, keyword);
         setPage(1);
         setLoading(true);
-    }, 500);
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const handleChangeWord = useCallback(debounce(changeWord, 500), []);
 
     const handleChangeValue = (text: string) => {
         setValue(text);
@@ -80,6 +83,7 @@ const BookList = () => {
     // };
 
     const onLoadMore = () => {
+        console.log(isError);
         if (!isError) {
             const nextPage = page + 1;
             setPage(nextPage);
@@ -110,7 +114,11 @@ const BookList = () => {
                     value={value}
                     onChangeValue={handleChangeValue}
                     placeholder="từ mới, vd: 階段,も,mo,...."
-                    error={!words.length ? 'Tiếc ghê không có từ này' : ''}
+                    error={
+                        !loading && !words.length
+                            ? 'Tiếc ghê không có từ này'
+                            : ''
+                    }
                 />
             </View>
 
@@ -148,6 +156,7 @@ const styles = StyleSheet.create({
     container: {
         paddingTop: -35,
         backgroundColor: '#FFFFFF',
+        flex: 1,
     },
     loading: {
         flex: 1,

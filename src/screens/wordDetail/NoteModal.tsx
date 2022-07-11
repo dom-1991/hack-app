@@ -55,7 +55,7 @@ const NoteModal = (props: NoteModalProps) => {
                     </View>
                     <View style={styles.centerNoteModal}>
                         <Text style={styles.noteMeaning}>{word?.meaning}</Text>
-                        <Text style={styles.noteMyNote}>{word?.note}</Text>
+                        <Text style={styles.word}>{word?.note}</Text>
                     </View>
 
                     <Input

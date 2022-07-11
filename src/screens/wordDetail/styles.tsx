@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
     },
 
     noteMeaning: {
-        fontSize: FontSize.Font14,
+        fontSize: FontSize.Font18,
         marginVertical: Spacing.height32,
         color: 'rgba(0, 0, 0, 0.87)',
     },

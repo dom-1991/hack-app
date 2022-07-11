@@ -7,7 +7,7 @@ import {
     NewChars,
 } from '@types';
 
-// const API_ENDPOINT = 'http://nguyenthithom.name.vn';
+//const API_ENDPOINT = 'http://nguyenthithom.name.vn';
 const API_ENDPOINT = 'http://103.130.213.12';
 
 export const getWords = (params?: CharsSearch) => {
@@ -16,6 +16,16 @@ export const getWords = (params?: CharsSearch) => {
         const qs = queryString.stringify(params);
         url += `?${qs}`;
     }
+    fetch(url)
+        .then(response => response.json())
+        .then(json => {
+            console.log(json);
+            return json;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
     return axiosClient.get(url);
 };
 

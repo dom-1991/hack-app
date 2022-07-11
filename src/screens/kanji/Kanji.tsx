@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     ActivityIndicator,
     FlatList,
@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { debounce } from 'lodash';
+import debounce from 'lodash.debounce';
 
 import { Images, Spacing } from '@assets';
 import { CommonButton, Input, Word } from '@components';
@@ -61,11 +61,14 @@ export const KanjiScreen = () => {
         }
     };
 
-    const handleChangeWord = debounce((keyword: string) => {
+    const changeWord = (keyword: string) => {
         fetchWords(1, keyword);
         setPage(1);
         setLoading(true);
-    }, 500);
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const handleChangeWord = useCallback(debounce(changeWord, 500), []);
 
     const handleChangeValue = (text: string) => {
         setValue(text);
@@ -109,7 +112,11 @@ export const KanjiScreen = () => {
                     value={value}
                     onChangeValue={handleChangeValue}
                     placeholder="chữ hán, vd: 日"
-                    error={!words.length ? 'Tiếc ghê không có từ này' : ''}
+                    error={
+                        !loading && !words.length
+                            ? 'Tiếc ghê không có từ này'
+                            : ''
+                    }
                 />
             </View>
             {loading ? (
