@@ -8,7 +8,7 @@ import {
 } from '@types';
 
 //const API_ENDPOINT = 'http://nguyenthithom.name.vn';
-const API_ENDPOINT = 'http://103.130.213.12';
+const API_ENDPOINT = 'http://103.130.213.13';
 
 export const getWords = (params?: CharsSearch) => {
     let url = API_ENDPOINT + '/api/chars';
