@@ -30,7 +30,7 @@ export const WordDetail = () => {
     const navigation: any = useNavigation();
 
     const words = useAppSelector(selectWords);
-    const myWord = words?.myWords?.find(wordItem => wordItem?.id === item?.id);
+    const myWord = words?.myWords?.find(wordItem => wordItem?.id === word?.id);
 
     const fetchWord = useCallback(async (id: number) => {
         try {
