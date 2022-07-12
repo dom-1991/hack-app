@@ -27,7 +27,7 @@ export const KanjiDetail = () => {
     const [prev, setPrev] = useState<number>(-1);
 
     const words = useAppSelector(selectWords);
-    const myWord = words?.myWords?.find(wordItem => wordItem?.id === item?.id);
+    const myWord = words?.myWords?.find(wordItem => wordItem?.id === word?.id);
 
     const fetchWord = useCallback(async (id: number) => {
         try {
