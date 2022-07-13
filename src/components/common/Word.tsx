@@ -40,8 +40,12 @@ export const Word = (props: WordProps) => {
             onPress={onPress}>
             <View style={styles.wordContainer}>
                 <View style={styles.word}>
-                    <Text style={styles.wordTitle}>{word.word}</Text>
-                    <Text style={styles.wordDescription}>{word.reading}</Text>
+                    <Text style={styles.wordTitle}>
+                        {limitChar(word.word, 5, false)}
+                    </Text>
+                    <Text style={styles.wordDescription}>
+                        {limitChar(word.reading, 5, false)}
+                    </Text>
                 </View>
                 <View>
                     {!myWord && (

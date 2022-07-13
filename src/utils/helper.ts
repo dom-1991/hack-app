@@ -36,22 +36,27 @@ export function limitWord(
 export function limitChar(
     string: string,
     limit: number = 20,
+    isAlpha: boolean = true,
     suffix: string = '...',
 ) {
     if (string) {
-        const numberWords = string.split(' ');
-        let newString = numberWords[0];
-        for (let index = 1; index < numberWords.length; index++) {
-            const word = numberWords[index];
-            const wordToCheck = `${newString} ${word}`;
-            if (wordToCheck.length > limit) {
-                newString += suffix;
-                break;
-            } else {
-                newString = wordToCheck;
+        if (isAlpha) {
+            const numberWords = string.split(' ');
+            let newString = numberWords[0];
+            for (let index = 1; index < numberWords.length; index++) {
+                const word = numberWords[index];
+                const wordToCheck = `${newString} ${word}`;
+                if (wordToCheck.length > limit) {
+                    newString += suffix;
+                    break;
+                } else {
+                    newString = wordToCheck;
+                }
             }
+            return newString;
+        } else {
+            return string.slice(0, limit) + suffix;
         }
-        return newString;
     }
     return string;
 }

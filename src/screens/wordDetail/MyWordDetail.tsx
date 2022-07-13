@@ -23,12 +23,12 @@ export const MyWordDetail = () => {
     const navigation: any = useNavigation();
     useEffect(() => {
         const myWordIndex = words?.myWords?.findIndex(
-            wordItem => wordItem?.id === item?.id,
+            wordItem => wordItem?.id === word?.id,
         );
         if (myWordIndex) {
             setWord(words?.myWords[myWordIndex]);
         }
-    }, [item?.id, words]);
+    }, [word, words]);
 
     const [noteModalVisible, setNoteModalVisible] = useState(false);
     const [cancelModalVisible, setCancelModalVisible] = useState(false);
@@ -43,7 +43,7 @@ export const MyWordDetail = () => {
 
     const handleToggleRead = () => {
         const noteWord: CharsMyItem = {
-            ...item,
+            ...word,
             myNote: word?.myNote,
             isLearn: !word?.isLearn,
         };

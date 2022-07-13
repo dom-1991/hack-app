@@ -20,6 +20,8 @@ export const styles = StyleSheet.create({
     },
     wordContainer: {
         flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginBottom: Spacing.height10,
     },
 
     inner: {
@@ -31,6 +33,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
+        flexWrap: 'wrap',
     },
 
     topIcon: {
@@ -53,7 +56,7 @@ export const styles = StyleSheet.create({
     read: {
         fontSize: FontSize.Font14,
         color: 'rgba(0, 0, 0, 0.78)',
-        textAlign: 'center',
+        textAlign: 'right',
     },
 
     noteRead: {

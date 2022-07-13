@@ -10,20 +10,20 @@ const Tab = createBottomTabNavigator();
 export const styles = StyleSheet.create({
     bottomTabHomeIcon: {
         width: Spacing.width36,
-        height: Spacing.height28,
+        height: Spacing.height20,
         resizeMode: 'contain',
     },
 
     bottomTabJapanIcon: {
         width: Spacing.width57,
-        height: Spacing.height28,
+        height: Spacing.height20,
         resizeMode: 'contain',
     },
 
     bottomTabProfileIcon: {
         width: Spacing.width25,
         resizeMode: 'contain',
-        height: Spacing.height28,
+        height: Spacing.height20,
     },
 });
 
