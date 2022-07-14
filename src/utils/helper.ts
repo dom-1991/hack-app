@@ -39,7 +39,7 @@ export function limitChar(
     isAlpha: boolean = true,
     suffix: string = '...',
 ) {
-    if (string.length > limit) {
+    if (string && string.length > limit) {
         if (isAlpha) {
             const numberWords = string.split(' ');
             let newString = numberWords[0];
