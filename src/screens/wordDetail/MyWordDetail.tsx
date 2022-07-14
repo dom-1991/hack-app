@@ -25,7 +25,7 @@ export const MyWordDetail = () => {
         const myWordIndex = words?.myWords?.findIndex(
             wordItem => wordItem?.id === word?.id,
         );
-        if (myWordIndex) {
+        if (myWordIndex >= 0) {
             setWord(words?.myWords[myWordIndex]);
         }
     }, [word, words]);
